@@ -1,0 +1,1 @@
+MnfstLst = []  # 航班舱单Shpmt对象列表
