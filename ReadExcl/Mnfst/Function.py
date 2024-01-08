@@ -13,8 +13,6 @@ def ReadFltMnfstST(MnfstPath):  # 读取舱单副本表格航班舱单页
         Row = Shpmt(AWBNo, SHC, ManDesc, Pcs, Weight, ChgWt, Vol)  # 创建当前行Shpmt对象
         from ReadExcl.Mnfst.Variable import MnfstLst
         MnfstLst.append(Row)  # 添加到航班舱单Shpmt对象列表
-    # for i in range(len(MnfstLst)):  # 测试代码,遍历列表
-    #     print(MnfstLst[i].__dict__)  # 打印列表
 
 def ReadULDMnfstST(MnfstPath):  # 读取舱单副本表格ULD舱单页
     TypeTup = ('PMC', 'PAG', 'PLA', 'AKE', 'P1P')  # 类型元组
@@ -33,9 +31,18 @@ def ReadULDMnfstST(MnfstPath):  # 读取舱单副本表格ULD舱单页
                 while C1 != 'Total':  # 不是Total字符串
                     if C1.find('077-') > -1:  # 找到077-字符串
                         AWBNo = C1  # 得到运单号
+                        Pcs = int(df.iloc[j][2].split('/')[0])  # 得到件数
+                        Weight = float(df.iloc[j][4])  # 得到重量
+                        from ReadExcl.Mnfst.Class import ShpmtULD
+                        Row = ShpmtULD(Type, No, Pcs, Weight)  # 创建当前行ShpmtULD对象
+                        from ReadExcl.Mnfst.Variable import MnfstLst
+                        Shpt = FindAWBNo(MnfstLst, AWBNo)  # 返回该运单号货物对象
+                        Shpt.AddULD(Row)  # 添加集装器
                     j += 1  # 行号加1
                     C1 = str(df.iloc[j][1])  # 得到第1列字符串
                 break
-    pd.set_option('display.max_rows', None)  # 显示所有行
-    pd.set_option('expand_frame_repr', False)  # 显示所有列
-    print(df)  # 打印数据框架
+
+def FindAWBNo(MnfstLst, AWBNo):  # 返回该运单号货物对象
+    for Shpmt in MnfstLst:  # 遍历舱单对象列表
+        if Shpmt.AWBNo == AWBNo:  # 找到舱单对象相对应的运单号
+            return Shpmt  # 返回货物对象

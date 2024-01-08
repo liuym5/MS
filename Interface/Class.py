@@ -28,4 +28,6 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         ReadFltMnfstST(MnfstPath)  # 读取舱单副本表格航班舱单页
         from ReadExcl.Mnfst.Function import ReadULDMnfstST
         ReadULDMnfstST(MnfstPath)  # 读取舱单副本表格ULD舱单页
+        from WritExcl.ULDMnfst.Function import WritULDMnfst
+        WritULDMnfst(ULDMnfstPath)  # 写集装器舱单信息页
         self.MsgLabel.setText("ULD舱单录入完成")
