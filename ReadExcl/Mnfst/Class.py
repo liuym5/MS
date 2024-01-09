@@ -1,5 +1,6 @@
 class Shpmt:  # Shpmt类
     AWBNo = ''  # 运单号
+    Dest = ''  # 目的地
     SHC = ''  # 特殊操作代码
     ManDesc = ''  # 品名
     Pcs = 0  # 件数
@@ -10,8 +11,9 @@ class Shpmt:  # Shpmt类
     LeftVol = 0  # 剩余体积
     ULDLst = []  # 集装器对象列表
 
-    def __init__(self, AWBNo, SHC, ManDesc, Pcs, Weight, ChgWt, Vol):  # 构造函数
+    def __init__(self, AWBNo, Dest, SHC, ManDesc, Pcs, Weight, ChgWt, Vol):  # 构造函数
         self.AWBNo = AWBNo  # 得到运单号
+        self.Dest = Dest  # 得到目的地
         self.SHC = SHC  # 得到特殊操作代码
         self.ManDesc = ManDesc  # 得到品名
         self.Pcs = int(Pcs)  # 得到件数
@@ -32,15 +34,17 @@ class Shpmt:  # Shpmt类
 class ShpmtULD:  # ShpmtULD类
     Type = ''  # 类型
     No = ''  # 号
+    Owner = ''  # 所有人
     ULDNo = ''  # 集装器号
     Pcs = 0  # 件数
     Weight = 0  # 重量
     Vol = 0  # 体积
     ChgWt = 0  # 计费重量
 
-    def __init__(self, Type, No, Pcs, Weight):  # 构造函数
+    def __init__(self, Type, No, Owner, Pcs, Weight):  # 构造函数
         self.Type = Type  # 得到类型
         self.No = No  # 得到号
+        self.Owner = Owner  # 得到所有人
         self.ULDNo = self.Type + self.No  # 得到集装器号
         self.Pcs = int(Pcs)  # 得到件数
         self.Weight = float(Weight)  # 得到重量

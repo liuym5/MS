@@ -25,8 +25,11 @@ class Ui_MSForm(object):
         self.DateDE.setGeometry(QtCore.QRect(70, 40, 91, 31))
         self.DateDE.setObjectName("DateDE")
         self.ULDMnfstBtn = QtWidgets.QPushButton(MSForm)
-        self.ULDMnfstBtn.setGeometry(QtCore.QRect(10, 80, 61, 31))
+        self.ULDMnfstBtn.setGeometry(QtCore.QRect(80, 80, 61, 31))
         self.ULDMnfstBtn.setObjectName("ULDMnfstBtn")
+        self.DSMnfstBtn = QtWidgets.QPushButton(MSForm)
+        self.DSMnfstBtn.setGeometry(QtCore.QRect(10, 80, 61, 31))
+        self.DSMnfstBtn.setObjectName("DSMnfstBtn")
 
         self.retranslateUi(MSForm)
         QtCore.QMetaObject.connectSlotsByName(MSForm)
@@ -36,3 +39,4 @@ class Ui_MSForm(object):
         MSForm.setWindowTitle(_translate("MSForm", "MS神器"))
         self.MsgLabel.setText(_translate("MSForm", "未运行"))
         self.ULDMnfstBtn.setText(_translate("MSForm", "ULD舱单"))
+        self.DSMnfstBtn.setText(_translate("MSForm", "DS舱单"))
