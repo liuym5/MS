@@ -42,7 +42,9 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         if os.path.exists(MnfstPath) == False:  # 舱单副本表格文件不存在
             self.MsgLabel.setText("舱单副本表格文件不存在！！")
             return
-        ULDMnfstPath = OutDirPath + '_lkg_gsa_ffm_舱单_2024-1-19.xlsx'  # ULD舱单表格文件路径
+        Year4_Month2_Day2 = self.DateDE.date().toString('yyyy-MM-dd')  # 4位数字年-2位数字月-2位数字日
+        ULDMnfstFile = '_lkg_gsa_ffm_舱单_' + Year4_Month2_Day2 + '.xlsx'  # ULD舱单表格文件名
+        ULDMnfstPath = OutDirPath + ULDMnfstFile  # ULD舱单表格文件路径
         if os.path.exists(ULDMnfstPath) == False:  # ULD舱单表格文件不存在
             self.MsgLabel.setText("ULD舱单表格文件不存在！！")
             return

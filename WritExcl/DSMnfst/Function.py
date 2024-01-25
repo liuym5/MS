@@ -22,7 +22,6 @@ def WritDSMnfst(MnfstPath):  # 写DS舱单页
                     DSMnfstST.Cells(r, 8).NumberFormat = '@'  # 设置单元格格式为文本
                     DSMnfstST.Cells(r, 8).Value = str(DSShpmt.Pcs) + '/' + str(DSShpmt.TtlPcs)  # 写件数/总件数
                 else:  # 集装器件数等于总件数
-                    DSMnfstST.Cells(r, 8).NumberFormat = '@'  # 设置单元格格式为文本
                     DSMnfstST.Cells(r, 8).Value = DSShpmt.TtlPcs  # 写总件数
                 DSMnfstST.Cells(r, 9).Value = DSShpmt.Weight  # 写重量
             else:  # 老序号集装器
@@ -32,7 +31,6 @@ def WritDSMnfst(MnfstPath):  # 写DS舱单页
                     DSMnfstST.Cells(r, 8).NumberFormat = '@'  # 设置单元格格式为文本
                     DSMnfstST.Cells(r, 8).Value = str(DSShpmt.Pcs) + '/' + str(DSShpmt.TtlPcs)  # 写件数/总件数
                 else:  # 集装器件数等于总件数
-                    DSMnfstST.Cells(r, 8).NumberFormat = '@'  # 设置单元格格式为文本
                     DSMnfstST.Cells(r, 8).Value = DSShpmt.TtlPcs  # 写总件数
                 DSMnfstST.Cells(r, 9).Value = DSShpmt.Weight  # 写重量
             r += 1  # 行号加1
