@@ -11,9 +11,9 @@ def ReadFltMnfstST(MnfstPath):  # 读取舱单副本表格航班舱单页
         ChgWt = df.iloc[r][9]  # 得到计费重量
         Vol = df.iloc[r][10]  # 得到体积
         from ReadExcl.Mnfst.Class import Shpmt
-        Row = Shpmt(AWBNo, Dest, SHC, ManDesc, Pcs, Weight, ChgWt, Vol)  # 创建当前行Shpmt对象
+        ShpmtTmp = Shpmt(AWBNo, Dest, SHC, ManDesc, Pcs, Weight, ChgWt, Vol)  # 创建Shpmt对象
         from ReadExcl.Mnfst.Variable import MnfstLst
-        MnfstLst.append(Row)  # 添加到航班舱单Shpmt对象列表
+        MnfstLst.append(ShpmtTmp)  # 添加到航班舱单Shpmt对象列表
 
 def ReadULDMnfstST(MnfstPath):  # 读取舱单副本表格ULD舱单页
     TypeTup = ('PMC', 'PAG', 'PLA', 'AKE', 'P1P')  # 类型元组
@@ -36,10 +36,10 @@ def ReadULDMnfstST(MnfstPath):  # 读取舱单副本表格ULD舱单页
                         Pcs = int(df.iloc[j][2].split('/')[0])  # 得到件数
                         Weight = float(df.iloc[j][4])  # 得到重量
                         from ReadExcl.Mnfst.Class import ShpmtULD
-                        Row = ShpmtULD(Type, No, Owner, Pcs, Weight)  # 创建当前行ShpmtULD对象
+                        ShpmtULDTmp = ShpmtULD(Type, No, Owner, Pcs, Weight)  # 创建ShpmtULD对象
                         from ReadExcl.Mnfst.Variable import MnfstLst
-                        Shpt = FindAWBNo(MnfstLst, AWBNo)  # 返回该运单号货物对象
-                        Shpt.AddULD(Row)  # 添加集装器
+                        ShpmtTmp = FindAWBNo(MnfstLst, AWBNo)  # 返回该运单号货物对象
+                        ShpmtTmp.AddULD(ShpmtULDTmp)  # 添加集装器
                     j += 1  # 行号加1
                     C1 = str(df.iloc[j][1])  # 得到第1列字符串
                 break

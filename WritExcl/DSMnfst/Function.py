@@ -1,4 +1,4 @@
-def WritDSMnfst(MnfstPath):  # 写DS舱单页
+def WritDSMnfstST(MnfstPath):  # 写DS舱单页
     import win32com.client
     XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
@@ -37,6 +37,8 @@ def WritDSMnfst(MnfstPath):  # 写DS舱单页
     MnfstWB.Save()  # 保存舱单副本表格
     MnfstWB.Close()  # 关闭舱单副本表格对象
     XL.Quit()  # 关闭Excel
+    from ReadExcl.Mnfst.Variable import MnfstLst
+    MnfstLst.clear()  # 清空航班舱单Shpmt对象列表
 
 def ReadMnfstLst():  # 读取舱单对象列表
     Ser = 0  # 得到初始序列号
@@ -45,21 +47,21 @@ def ReadMnfstLst():  # 读取舱单对象列表
         for ShpmtULD in Shpmt.ULDLst:  # 遍历集装器对象列表
             if ShpmtULD.Owner == 'DS':  # 是DS板
                 from WritExcl.DSMnfst.Variable import DSULDLst
-                DSULDTmp = FindNo(DSULDLst, ShpmtULD.No)  # 返回该号DS集装器对象
+                DSULDTmp = FindNo(DSULDLst, ShpmtULD.No)  # 返回该号DSULD对象
                 if DSULDTmp != False:  # 返回的是DS集装器对象
                     from WritExcl.DSMnfst.Class import DSShpmt
-                    DSShptTmp = DSShpmt(Shpmt.AWBNo, Shpmt.Dest, ShpmtULD.Pcs, Shpmt.Pcs, ShpmtULD.Weight)  # 创建临时DS货物对象
+                    DSShptTmp = DSShpmt(Shpmt.AWBNo, Shpmt.Dest, ShpmtULD.Pcs, Shpmt.Pcs, ShpmtULD.Weight)  # 创建DSShpmt对象
                     DSULDTmp.AddShpt(DSShptTmp)  # 添加货物
-                else:  # 返回False没有找到DS集装器对象相对应的号
+                else:  # 返回False没有找到DSULD对象相对应的号
                     Ser += 1  # 序列号加1
                     from WritExcl.DSMnfst.Class import DSShpmt
-                    DSShptTmp = DSShpmt(Shpmt.AWBNo, Shpmt.Dest, ShpmtULD.Pcs, Shpmt.Pcs, ShpmtULD.Weight)  # 创建临时DS货物对象
+                    DSShptTmp = DSShpmt(Shpmt.AWBNo, Shpmt.Dest, ShpmtULD.Pcs, Shpmt.Pcs, ShpmtULD.Weight)  # 创建DSShpmt对象
                     from WritExcl.DSMnfst.Class import DSULD
-                    DSULDTmp = DSULD(Ser, ShpmtULD.Type, ShpmtULD.No, ShpmtULD.Owner, 'CAI', DSShptTmp)  # 创建临时DS集装器对象
-                    DSULDLst.append(DSULDTmp)  # 添加临时DS集装器对象到DS集装器对象列表
+                    DSULDTmp = DSULD(Ser, ShpmtULD.Type, ShpmtULD.No, ShpmtULD.Owner, 'CAI', DSShptTmp)  # 创建DSULD对象
+                    DSULDLst.append(DSULDTmp)  # 添加DSULD对象到DSULD对象列表
 
-def FindNo(DSULDLst, No):  # 返回该号DS集装器对象
-    for DSULD in DSULDLst:  # 遍历DS集装器对象列表
-        if DSULD.No == No:  # 找到DS集装器对象相对应的号
-            return DSULD  # 返回DS集装器对象
-    return False  # 返回False没有找到DS集装器对象相对应的号
+def FindNo(DSULDLst, No):  # 返回该号DSULD对象
+    for DSULD in DSULDLst:  # 遍历DSULD对象列表
+        if DSULD.No == No:  # 找到DSULD对象相对应的号
+            return DSULD  # 返回DSULD对象
+    return False  # 返回False没有找到DSULD对象相对应的号

@@ -1,4 +1,4 @@
-def WritULDMnfst(ULDMnfstPath):  # 写集装器舱单信息页
+def WritULDMnfstST(ULDMnfstPath):  # 写集装器舱单信息页
     import win32com.client
     XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
@@ -22,3 +22,4 @@ def WritULDMnfst(ULDMnfstPath):  # 写集装器舱单信息页
     ULDMnfstWB.Save()  # 保存集装器舱单表格
     ULDMnfstWB.Close()  # 关闭集装器舱单表格对象
     XL.Quit()  # 关闭Excel
+    MnfstLst.clear()  # 清空航班舱单Shpmt对象列表

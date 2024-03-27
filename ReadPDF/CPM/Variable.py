@@ -1,0 +1,1 @@
+CPMULDLst = []  # CPMULD对象列表
