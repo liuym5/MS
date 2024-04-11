@@ -9,23 +9,25 @@ sys.exit(MSApp.exec_())
 
 # print(sys.exc_info())  # 打印异常
 
-# from ReadPDF.CPM.Variable import CPMULDLst
-# for CPMULD in CPMULDLst:
-#     print(CPMULD.__dict__)
+# from ReadTXT.CPM.Variable import CPMULDLst
+# for cpmuld in CPMULDLst:
+#     print(cpmuld.__dict__)
 
-# from ReadPDF.UCM.Variable import UCMULDLst
-# for UCMULD in UCMULDLst:
-#     print(UCMULD.__dict__)
+# from ReadTXT.UCM951.Variable import UCMULDLst
+# for ucmuld in UCMULDLst:
+#     print(ucmuld.__dict__)
 
 # for i in range(len(List)):  # 遍历列表
 #     print(List[i].__dict__)  # 打印列表
 
-# for Shpmt in MnfstLst:
-#     print(Shpmt.__dict__)
-#     for ShpmtULD in Shpmt.ULDLst:
-#         print(ShpmtULD.__dict__)
+# from ReadExcl.Mnfst.Variable import MnfstLst
+# for shpmt in MnfstLst:
+#     print(shpmt.__dict__)
+#     for shpmtuld in shpmt.ULDLst:
+#         print(shpmtuld.__dict__)
 
-# for DSULD in DSULDLst:
-#     print(DSULD.__dict__)
-#     for DSShpmt in DSULD.ShptLst:
-#         print(DSShpmt.__dict__)
+# from WritExcl.DSMnfst.Variable import DSULDLst
+# for dsuld in DSULDLst:
+#     print(dsuld.__dict__)
+#     for dsshpmt in dsuld.ShptLst:
+#         print(dsshpmt.__dict__)
