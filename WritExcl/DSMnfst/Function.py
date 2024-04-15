@@ -1,8 +1,8 @@
-def WritDSMnfstST(MnfstPath):  # 写DS舱单页
+def WritDSMnfstST(Path):  # 写DS舱单页
     import win32com.client
     XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
-    MnfstWB = XL.Workbooks.Open(MnfstPath)  # 返回舱单副本表格对象
+    MnfstWB = XL.Workbooks.Open(Path)  # 返回舱单副本表格对象
     DSMnfstST = MnfstWB.Worksheets('DS舱单')  # 返回DS舱单页对象
     Ser = 0  # 得到初始当前序号
     r = 2  # 得到初始行号

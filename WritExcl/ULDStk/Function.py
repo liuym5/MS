@@ -1,13 +1,13 @@
-def WritCPMULDStkST(ULDStkPath):  # 写CPM到ULDStock页
+def WritCPMULDStkST(Path):  # 写CPM到ULDStock页
     import win32com.client
     XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
-    ULDStkWB = XL.Workbooks.Open(ULDStkPath)  # 返回ULDStock表格对象
+    ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
     WritCPMULD(ULDStkST, 'PMC', 3, 9)  # 写PMC
-    WritCPMULD(ULDStkST, 'PAG', 11, 15)  # 写PAG
-    WritCPMULD(ULDStkST, 'PLA', 15, 19)  # 写PLA
-    WritCPMULD(ULDStkST, 'AKE', 19, 28)  # 写AKE
+    WritCPMULD(ULDStkST, 'PAG', 11, 16)  # 写PAG
+    WritCPMULD(ULDStkST, 'PLA', 16, 20)  # 写PLA
+    WritCPMULD(ULDStkST, 'AKE', 20, 29)  # 写AKE
     ULDStkWB.Save()  # 保存ULDStock表格
     ULDStkWB.Close()  # 关闭ULDStock表格对象
     XL.Quit()  # 关闭Excel
@@ -48,15 +48,15 @@ def ReadCPMULD(Type):  # 返回ULDLst
             ULDLst.append(cpmuld)  # 添加CPMULD对象到ULDLst
     return ULDLst  # 返回ULDLst
 
-def WritUCMULDStkST(ULDStkPath):  # 写UCM到ULDStock页
+def WritUCMULDStkST(Path):  # 写UCM到ULDStock页
     import win32com.client
     XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
-    ULDStkWB = XL.Workbooks.Open(ULDStkPath)  # 返回ULDStock表格对象
+    ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
     WritUCMULD(ULDStkST, 'PMC', 3, 9)  # 写PMC
-    WritUCMULD(ULDStkST, 'PAG', 11, 15)  # 写PAG
-    WritUCMULD(ULDStkST, 'PLA', 15, 19)  # 写PLA
+    WritUCMULD(ULDStkST, 'PAG', 11, 16)  # 写PAG
+    WritUCMULD(ULDStkST, 'PLA', 16, 20)  # 写PLA
     ULDStkWB.Save()  # 保存ULDStock表格
     ULDStkWB.Close()  # 关闭ULDStock表格对象
     XL.Quit()  # 关闭Excel
@@ -92,21 +92,23 @@ def ReadUCMULD(Type):  # 返回ULDLst
             ULDLst.append(ucmuld)  # 添加UCMULD对象到ULDLst
     return ULDLst  # 返回ULDLst
 
-def DelLWSULDStkST(ULDStkPath):  # 删除LWS集装器在ULD Stock页
+def DelULDStkST(Path):  # 删除集装器在ULD Stock页
     import win32com.client
     XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
-    ULDStkWB = XL.Workbooks.Open(ULDStkPath)  # 返回ULDStock表格对象
+    ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
-    DelLWSULD(ULDStkST, 'PMC', 3, 9)  # 删PMC
-    DelLWSULD(ULDStkST, 'PAG', 11, 15)  # 删PAG
-    DelLWSULD(ULDStkST, 'PLA', 15, 19)  # 删PLA
-    DelLWSULD(ULDStkST, 'AKE', 19, 28)  # 删AKE
+    DelULD(ULDStkST, 'PMC', 3, 9)  # 删PMC
+    DelULD(ULDStkST, 'PAG', 11, 16)  # 删PAG
+    DelULD(ULDStkST, 'PLA', 16, 20)  # 删PLA
+    DelULD(ULDStkST, 'AKE', 20, 29)  # 删AKE
     ULDStkWB.Save()  # 保存ULDStock表格
     ULDStkWB.Close()  # 关闭ULDStock表格对象
     XL.Quit()  # 关闭Excel
+    from ReadTXT.UCM951.Variable import UCMULDLst
+    UCMULDLst.clear()  # 清空UCMULDLst
 
-def DelLWSULD(ST, Type, r1, r2):  # 删除LWSULD
+def DelULD(ST, Type, r1, r2):  # 删除ULD
     ULDLst = ReadUCMULD(Type)  # 返回ULDLst
     ULDLstLen = len(ULDLst)  # ULDLst长度
     NoNoTF = False  # 无号为否
@@ -127,7 +129,7 @@ def DelLWSULD(ST, Type, r1, r2):  # 删除LWSULD
             if NoTF(ULDLst, No) == False:  # 无号
                 Font = ST.Cells(r, c).Font.ColorIndex  # 单元格文字颜色号
                 Interior = ST.Cells(r, c).Interior.ColorIndex  # 单元格背景颜色号
-                from WritExcl.ULDStock.Class import ColorULD
+                from WritExcl.ULDStk.Class import ColorULD
                 ColorULDTmp = ColorULD(No, Font, Interior)  # 创建ColorULD对象
                 ColorULDLst.append(ColorULDTmp)  # 添加ColorULD对象到ColorULD对象列表
                 ST.Cells(r, c).Value = ''  # 写空
@@ -176,16 +178,16 @@ def WritLeftULD(ColorULDLst, ST, r1, r2):  # 写剩余ULD
                 del ColorULDLst[0]  # 删除ColorULDLst第0项
                 break
 
-def ChkUCMULDStkST(ULDStkPath):  # 检查UCMULD在ULD Stock页
+def ChkUCMULDStkST(Path):  # 检查UCMULD在ULD Stock页
     import win32com.client
     XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
-    ULDStkWB = XL.Workbooks.Open(ULDStkPath)  # 返回ULDStock表格对象
+    ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
     ChkUCMULD(ULDStkST, 'PMC', 3, 9)  # 检查PMC
-    ChkUCMULD(ULDStkST, 'PAG', 11, 15)  # 检查PAG
-    ChkUCMULD(ULDStkST, 'PLA', 15, 19)  # 检查PLA
-    ChkUCMULD(ULDStkST, 'AKE', 19, 28)  # 检查AKE
+    ChkUCMULD(ULDStkST, 'PAG', 11, 16)  # 检查PAG
+    ChkUCMULD(ULDStkST, 'PLA', 16, 20)  # 检查PLA
+    ChkUCMULD(ULDStkST, 'AKE', 20, 29)  # 检查AKE
     ULDStkWB.Save()  # 保存ULDStock表格
     ULDStkWB.Close()  # 关闭ULDStock表格对象
     XL.Quit()  # 关闭Excel
@@ -210,4 +212,44 @@ def ChkUCMULD(ST, Type, r1, r2):  # 检查UCMULD
                             del ULDLst[i]  # 删除ULDLst第i项
                             break
                         i += 1  # 下标加1
+    NoStkPrt(ULDLst)  # 打印不在库存集装器号
+
+def ChkSCMULDStkST(Path):  # 检查SCM在ULD Stock页
+    import win32com.client
+    XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
+    XL.Visible = False  # 表格不可见
+    ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
+    ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
+    ChkSCM(ULDStkST, 'PMC', 3, 9)  # 检查PMC
+    ChkSCM(ULDStkST, 'PAG', 11, 16)  # 检查PAG
+    ChkSCM(ULDStkST, 'PLA', 16, 20)  # 检查PLA
+    ChkSCM(ULDStkST, 'AKE', 20, 29)  # 检查AKE
+    ULDStkWB.Save()  # 保存ULDStock表格
+    ULDStkWB.Close()  # 关闭ULDStock表格对象
+    XL.Quit()  # 关闭Excel
+
+def ChkSCM(ST, Type, r1, r2):  # 检查SCM
+    ULDLst = ReadUCMULD(Type)  # 返回ULDLst
+    ULDLstLen = len(ULDLst)  # ULDLst长度
+    NoNoTF = False  # 无号为否
+    if ULDLstLen > 0:  # ULDLst长度大于0
+        for r in range(r1, r2):  # 遍历行
+            if NoNoTF:  # 无号为是
+                break
+            for c in range(2, 7):  # 遍历列
+                No = ST.Cells(r, c).Text  # 号
+                if No == '':  # 号为空
+                    NoNoTF = True  # 无号为是
+                    break
+                i = 0  # 下标为0
+                for ucmuld in ULDLst:  # 遍历ULDLst
+                    if No == ucmuld.No:  # 有号
+                        Color = ST.Cells(r, c).Interior.ColorIndex  # 单元格背景颜色号
+                        if Color != 3:  # 单元格背景颜色不为3红色
+                            ST.Cells(r, c).Interior.ColorIndex = 4  # 单元格背景颜色为4绿色
+                        del ULDLst[i]  # 删除ULDLst第i项
+                        break
+                    i += 1  # 下标加1
+                    if i == len(ULDLst):  # 无号
+                        ST.Cells(r, c).Interior.ColorIndex = 7  # 单元格背景颜色为7紫色
     NoStkPrt(ULDLst)  # 打印不在库存集装器号

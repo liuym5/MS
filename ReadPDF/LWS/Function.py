@@ -10,7 +10,7 @@ def ReadLWS(Path):  # 读取LWS
         if j > -1:  # 找到类型
             No = LWS[i + 1]  # 号
             Owner = LWS[i + 2][:2]  # 所有人
-            from ReadTXT.UCM951 import UCMULD
+            from ReadTXT.UCM951.Class import UCMULD
             UCMULDTmp = UCMULD(Type, No, Owner)  # 创建UCMULD对象
             from ReadTXT.UCM951.Variable import UCMULDLst
             UCMULDLst.append(UCMULDTmp)  # 添加UCMULD对象到UCMULD对象列表

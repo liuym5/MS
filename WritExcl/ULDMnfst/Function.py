@@ -1,8 +1,8 @@
-def WritULDMnfstST(ULDMnfstPath):  # 写集装器舱单信息页
+def WritULDMnfstST(Path):  # 写集装器舱单信息页
     import win32com.client
     XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
-    ULDMnfstWB = XL.Workbooks.Open(ULDMnfstPath)  # 返回集装器舱单表格对象
+    ULDMnfstWB = XL.Workbooks.Open(Path)  # 返回集装器舱单表格对象
     ULDMnfstST = ULDMnfstWB.Worksheets('舱单信息')  # 返回集装器舱单信息页对象
     r = 8  # 得到初始行号
     from ReadExcl.Mnfst.Variable import MnfstLst

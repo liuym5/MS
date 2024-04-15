@@ -42,7 +42,18 @@ def FindType(TypeTup, item):  # 返回类型,类型首字母下标或返回空�
 def FindContent(item):  # 返回内容
     if item.find('/B') > -1:  # 找到/B
         return 'B' # 返回B
-    if item.find('/C') > -1:  # 找到/C
+    if item.find('/C.') > -1:  # 找到/C.
         return 'C' # 返回C
-    if item.find('/X') > -1:  # 找到/X
+    if item.find('/X.') > -1:  # 找到/X.
         return 'X' # 返回X
+
+def ReadCPMULD():  # 读取CPMULDLst
+    from ReadTXT.CPM.Variable import CPMULDLst
+    for cpmuld in CPMULDLst:  # 遍历CPMULDLst
+        Type = cpmuld.Type  # 类型
+        No = cpmuld.No  # 号
+        Owner = cpmuld.Owner  # 所有人
+        from ReadTXT.UCM951.Class import UCMULD
+        UCMULDTmp = UCMULD(Type, No, Owner)  # 创建UCMULD对象
+        from ReadTXT.UCM951.Variable import UCMULDLst
+        UCMULDLst.append(UCMULDTmp)  # 添加UCMULD对象到UCMULD对象列表

@@ -1,6 +1,6 @@
-def ReadFltMnfstST(MnfstPath):  # 读取舱单副本表格航班舱单页
+def ReadFltMnfstST(Path):  # 读取舱单副本表格航班舱单页
     import pandas as pd
-    df = pd.read_excel(MnfstPath, header=None)  # 读取舱单副本表格航班舱单页
+    df = pd.read_excel(Path, header=None)  # 读取舱单副本表格航班舱单页
     for r in range(len(df)):  # 遍历所有行
         AWBNo = df.iloc[r][1]  # 得到运单号
         Dest = df.iloc[r][3]  # 得到目的地
@@ -15,10 +15,10 @@ def ReadFltMnfstST(MnfstPath):  # 读取舱单副本表格航班舱单页
         from ReadExcl.Mnfst.Variable import MnfstLst
         MnfstLst.append(ShpmtTmp)  # 添加到航班舱单Shpmt对象列表
 
-def ReadULDMnfstST(MnfstPath):  # 读取舱单副本表格ULD舱单页
+def ReadULDMnfstST(Path):  # 读取舱单副本表格ULD舱单页
     TypeTup = ('PMC', 'PAG', 'PLA', 'AKE', 'P1P')  # 类型元组
     import pandas as pd
-    df = pd.read_excel(MnfstPath, sheet_name=1, header=None)  # 读取舱单副本表格ULD舱单页
+    df = pd.read_excel(Path, sheet_name=1, header=None)  # 读取舱单副本表格ULD舱单页
     for r in range(len(df)):  # 遍历所有行
         C0 = str(df.iloc[r][0])  # 得到第0列字符串
         for i in range(len(TypeTup)):  # 遍历类型元组
