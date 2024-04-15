@@ -32,7 +32,7 @@ def ReadSCM(Path):  # 读取SCM
                 from ReadTXT.UCM951.Variable import UCMULDLst
                 UCMULDLst.append(UCMULDTmp)  # 添加UCMULD对象到UCMULD对象列表
             else:  # 4位号
-                No = item[:4]  # 4位号
+                No = '0' + item[:4]  # 4位号
                 if No.isdigit():  # 是4位号
                     Owner = item[4:6]  # 所有人
                     from ReadTXT.UCM951.Class import UCMULD
@@ -49,7 +49,7 @@ def FindAKE(item, i):  # 找到AKE
         from ReadTXT.UCM951.Variable import UCMULDLst
         UCMULDLst.append(UCMULDTmp)  # 添加UCMULD对象到UCMULD对象列表
     else:  # 4位号
-        No = item[i + 4:i + 8]  # 4位号
+        No = '0' + item[i + 4:i + 8]  # 4位号
         Owner = item[i + 8:i + 10]  # 所有人
         from ReadTXT.UCM951.Class import UCMULD
         UCMULDTmp = UCMULD('AKE', No, Owner)  # 创建UCMULD对象
@@ -65,7 +65,7 @@ def FindPLT(item, CurType, Type):  # 找到板
         from ReadTXT.UCM951.Variable import UCMULDLst
         UCMULDLst.append(UCMULDTmp)  # 添加UCMULD对象到UCMULD对象列表
     else:  # 4位号
-        No = item[:4]  # 4位号
+        No = '0' + item[:4]  # 4位号
         Owner = item[4:6]  # 所有人
         from ReadTXT.UCM951.Class import UCMULD
         UCMULDTmp = UCMULD(CurType, No, Owner)  # 创建UCMULD对象
@@ -79,7 +79,7 @@ def FindPLT(item, CurType, Type):  # 找到板
         from ReadTXT.UCM951.Variable import UCMULDLst
         UCMULDLst.append(UCMULDTmp)  # 添加UCMULD对象到UCMULD对象列表
     else:  # 4位号
-        No = item[16:20]  # 4位号
+        No = '0' + item[16:20]  # 4位号
         Owner = item[20:22]  # 所有人
         from ReadTXT.UCM951.Class import UCMULD
         UCMULDTmp = UCMULD(Type, No, Owner)  # 创建UCMULD对象

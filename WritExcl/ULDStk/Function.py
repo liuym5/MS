@@ -251,5 +251,5 @@ def ChkSCM(ST, Type, r1, r2):  # 检查SCM
                         break
                     i += 1  # 下标加1
                     if i == len(ULDLst):  # 无号
-                        ST.Cells(r, c).Interior.ColorIndex = 7  # 单元格背景颜色为7紫色
+                        ST.Cells(r, c).Interior.ColorIndex = 8  # 单元格背景颜色为8淡蓝色
     NoStkPrt(ULDLst)  # 打印不在库存集装器号
