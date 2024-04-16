@@ -30,7 +30,10 @@ def WritCPMULD(ST, Type, r1, r2):  # 写CPMULD
             if No == '':  # 没有号
                 for cpmuld in ULDLst:  # 遍历ULDLst
                     ST.Cells(r, c).NumberFormat = '@'  # 设置单元格格式为文本
-                    ST.Cells(r, c).Value = cpmuld.No  # 写No
+                    if cpmuld.Owner == 'MS':  # 所有人是MS
+                        ST.Cells(r, c).Value = cpmuld.No # 写号
+                    else:  # 所有人不是MS
+                        ST.Cells(r, c).Value = cpmuld.No + cpmuld.Owner  # 写号所有人
                     ST.Cells(r, c).Interior.ColorIndex = 6  # 单元格背景颜色为6黄色
                     ST.Cells(r, c).HorizontalAlignment = 3  # 单元格为3水平居中
                     if cpmuld.Type == 'AKE' and cpmuld.Content in ('B', 'X'):  # 类型为AKE并且内容为B或X
@@ -79,7 +82,7 @@ def WritUCMULD(ST, Type, r1, r2):  # 写UCMULD
             if No == '':  # 没有号
                 for ucmuld in ULDLst:  # 遍历ULDLst
                     ST.Cells(r, c).NumberFormat = '@'  # 设置单元格格式为文本
-                    ST.Cells(r, c).Value = ucmuld.No  # 写No
+                    ST.Cells(r, c).Value = ucmuld.No + ucmuld.Owner  # 写号所有人
                     ST.Cells(r, c).Interior.ColorIndex = 6  # 单元格背景颜色为6黄色
                     del ULDLst[0]  # 删除ULDLst第0项
                     break
@@ -126,11 +129,15 @@ def DelULD(ST, Type, r1, r2):  # 删除ULD
             if No == '':  # 号为空
                 NoNoTF = True  # 无号为是
                 break
+            Owner = 'MS'  # 所有人为MS
+            if No[-2:] in ('R7', 'R9', 'C6'):  # 所有人为R7或R9或C6
+                No = No[:5]  # 号
+                Owner = No[-2:]  # 所有人
             if NoTF(ULDLst, No) == False:  # 无号
                 Font = ST.Cells(r, c).Font.ColorIndex  # 单元格文字颜色号
                 Interior = ST.Cells(r, c).Interior.ColorIndex  # 单元格背景颜色号
                 from WritExcl.ULDStk.Class import ColorULD
-                ColorULDTmp = ColorULD(No, Font, Interior)  # 创建ColorULD对象
+                ColorULDTmp = ColorULD(No, Owner, Font, Interior)  # 创建ColorULD对象
                 ColorULDLst.append(ColorULDTmp)  # 添加ColorULD对象到ColorULD对象列表
                 ST.Cells(r, c).Value = ''  # 写空
                 ST.Cells(r, c).Interior.ColorIndex = 2  # 单元格背景颜色为2白色
@@ -172,7 +179,11 @@ def WritLeftULD(ColorULDLst, ST, r1, r2):  # 写剩余ULD
                 break
             for coloruld in ColorULDLst:  # 遍历ColorULDLst
                 ST.Cells(r, c).NumberFormat = '@'  # 设置单元格格式为文本
-                ST.Cells(r, c).Value = coloruld.No  # 写No
+                if coloruld.Owner == 'MS':  # 所有人为MS
+                    No = coloruld.No  # 号
+                else:  # 所有人不为MS
+                    No = coloruld.No + coloruld.Owner  # 号加所有人
+                ST.Cells(r, c).Value = No  # 写号
                 ST.Cells(r, c).Font.ColorIndex = coloruld.Font  # 设置单元格文字颜色
                 ST.Cells(r, c).Interior.ColorIndex = coloruld.Interior  # 设置单元格背景颜色
                 del ColorULDLst[0]  # 删除ColorULDLst第0项
@@ -204,6 +215,8 @@ def ChkUCMULD(ST, Type, r1, r2):  # 检查UCMULD
                     break
                 Color = ST.Cells(r, c).Interior.ColorIndex  # 单元格背景颜色号
                 No = ST.Cells(r, c).Text  # 号
+                if No[-2:] in ('R7', 'R9', 'C6'):  # 所有人为R7或R9或C6
+                    No = No[:5]  # 号
                 if Color == 6:  # 单元格背景颜色为6黄色
                     i = 0  # 下标为0
                     for ucmuld in ULDLst:  # 遍历ULDLst
@@ -241,6 +254,8 @@ def ChkSCM(ST, Type, r1, r2):  # 检查SCM
                 if No == '':  # 号为空
                     NoNoTF = True  # 无号为是
                     break
+                if No[-2:] in ('R7', 'R9', 'C6'):  # 所有人为R7或R9或C6
+                    No = No[:5]  # 号
                 i = 0  # 下标为0
                 for ucmuld in ULDLst:  # 遍历ULDLst
                     if No == ucmuld.No:  # 有号

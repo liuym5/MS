@@ -9,7 +9,7 @@ def ReadUCM(Path):  # 读取UCM
         if i > -1:  # 找到类型
             No = item[3:7]  # 4位号
             Owner = item[7:9]  # 所有人
-            if No.isdigit() and Owner in ('MS', 'C6', 'DS'):  # 4位号为数字并且所有人为MS或C6或DS
+            if No.isdigit() and Owner in ('MS', 'R7', 'R9', 'C6', 'DS'):  # 4位号为数字并且所有人为MS或R7或R9或C6或DS
                 No = '0' + No  # 号前面加个0补充到5位
                 from ReadTXT.UCM951.Class import UCMULD
                 UCMULDTmp = UCMULD(Type, No, Owner)  # 创建UCMULD对象
@@ -17,7 +17,7 @@ def ReadUCM(Path):  # 读取UCM
                 UCMULDLst.append(UCMULDTmp)  # 添加CPMULD对象到CPMULD对象列表
             No = item[3:8]  # 5位号
             Owner = item[8:10]  # 所有人
-            if No.isdigit() and Owner in ('MS', 'C6', 'DS'):  # 5位号为数字并且所有人为MS或C6或DS
+            if No.isdigit() and Owner in ('MS', 'R7', 'R9', 'C6', 'DS'):  # 5位号为数字并且所有人为MS或R7或R9或C6或DS
                 from ReadTXT.UCM951.Class import UCMULD
                 UCMULDTmp = UCMULD(Type, No, Owner)  # 创建UCMULD对象
                 from ReadTXT.UCM951.Variable import UCMULDLst

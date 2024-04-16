@@ -4,17 +4,17 @@ def ReadUCM(Path):  # 读取UCM
     UCM = UCM.replace('\n', '').replace('SI', '').rstrip()  # 去除换行符和SI和末尾空格
     UCM = UCM.split('.') # 以.分割字符串
     TypeTup = ('AKE', 'PMC', 'PLA', 'PAG', 'P1P')  # 类型元组
-    Owner = ''  # 所有人
     for item in UCM:  # 遍历UCM字符串列表
         from ReadTXT.CPM.Function import FindType
         Type, i = FindType(TypeTup, item)  # 返回类型,类型首字母下标
         if i > -1:  # 找到类型
-            if item[-2:] in ('MS', 'C6', 'DS'):  # 所有人为MS或C6或DS
-                Owner = item[-2:]  # 所有人为MS或DS
+            if item[-2:] in ('R7', 'R9', 'C6', 'DS'):  # 所有人为R7或R9或C6或DS
+                Owner = item[-2:]  # 所有人
                 item = item.split(Owner)  # 以所有人分割字符串
-                No = item[3:]  # 号
+                No = item[0][3:]  # 号
             else:  # 无所有人
                 No = item[3:]  # 号
+                Owner = ''  # 所有人
             if len(No) == 5:  # 号为5位
                 from ReadTXT.UCM951.Class import UCMULD
                 UCMULDTmp = UCMULD(Type, No, Owner)  # 创建UCMULD对象

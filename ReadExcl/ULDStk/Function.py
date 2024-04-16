@@ -24,8 +24,9 @@ def ReadStk(ST, Type, r1, r2):  # 读取ULD
                 NoNoTF = True  # 无号为是
                 break
             Owner = 'MS'  # 所有人为MS
-            if Type == 'PMC' and No[0] != '0':  # 类型为PMC且首字符不为0
-                Owner = 'C6'  # 所有人为C6
+            if No[-2:] in ('R7', 'R9', 'C6'):  # 所有人为R7或R9或C6
+                No = No[:5]  # 号
+                Owner = No[-2:]  # 所有人
             from ReadTXT.UCM951.Class import UCMULD
             UCMULDTmp = UCMULD(Type, No, Owner)  # 创建UCMULD对象
             from ReadTXT.UCM951.Variable import UCMULDLst
