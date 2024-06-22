@@ -3,13 +3,13 @@ def ReadFltMnfstST(Path):  # 读取舱单副本表格航班舱单页
     df = pd.read_excel(Path, header=None)  # 读取舱单副本表格航班舱单页
     for r in range(len(df)):  # 遍历所有行
         AWBNo = df.iloc[r][1]  # 得到运单号
-        Dest = df.iloc[r][3]  # 得到目的地
-        SHC = df.iloc[r][5]  # 得到特殊操作代码
-        ManDesc = df.iloc[r][6]  # 得到品名
-        Pcs = df.iloc[r][7]  # 得到件数
-        Weight = df.iloc[r][8]  # 得到重量
-        ChgWt = df.iloc[r][9]  # 得到计费重量
-        Vol = df.iloc[r][10]  # 得到体积
+        Dest = df.iloc[r][4]  # 得到目的地
+        SHC = df.iloc[r][6]  # 得到特殊操作代码
+        ManDesc = df.iloc[r][7]  # 得到品名
+        Pcs = df.iloc[r][8]  # 得到件数
+        Weight = df.iloc[r][9]  # 得到重量
+        ChgWt = df.iloc[r][10]  # 得到计费重量
+        Vol = df.iloc[r][11]  # 得到体积
         from ReadExcl.Mnfst.Class import Shpmt
         ShpmtTmp = Shpmt(AWBNo, Dest, SHC, ManDesc, Pcs, Weight, ChgWt, Vol)  # 创建Shpmt对象
         from ReadExcl.Mnfst.Variable import MnfstLst

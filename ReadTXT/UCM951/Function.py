@@ -3,12 +3,12 @@ def ReadUCM(Path):  # 读取UCM
     UCM = ReadTXT(Path)  # 返回UCM951文件文本
     UCM = UCM.replace('\n', '').replace('SI', '').rstrip()  # 去除换行符和SI和末尾空格
     UCM = UCM.split('.') # 以.分割字符串
-    TypeTup = ('AKE', 'PMC', 'PLA', 'PAG', 'P1P')  # 类型元组
+    TypeTup = ('AKE', 'PMC', 'PLA', 'PAG', 'PAJ', 'P1P')  # 类型元组
     for item in UCM:  # 遍历UCM字符串列表
         from ReadTXT.CPM.Function import FindType
         Type, i = FindType(TypeTup, item)  # 返回类型,类型首字母下标
         if i > -1:  # 找到类型
-            if item[-2:] in ('R7', 'R9', 'C6', 'DS'):  # 所有人为R7或R9或C6或DS
+            if item[-2:] in ('R7', 'R9', 'C6', 'K8', 'DS'):  # 所有人为R7,R9,C6,K8,DS
                 Owner = item[-2:]  # 所有人
                 item = item.split(Owner)  # 以所有人分割字符串
                 No = item[0][3:]  # 号

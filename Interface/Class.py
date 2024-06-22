@@ -13,9 +13,9 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         self.ULDMnfstBtn.clicked.connect(self.ULDMnfstFctn)  # ULD舱单功能
         self.UCM951Btn.clicked.connect(self.UCM951Fctn)  # UCM951功能
         self.ULD952Btn.clicked.connect(self.ULD952Fctn)  # ULD952功能
+        self.RentalMnfstBtn.clicked.connect(self.RentalMnfstFctn)  # 租板舱单功能
         self.SCM1Btn.clicked.connect(self.SCM1Fctn)  # SCM1功能
         self.SCM2Btn.clicked.connect(self.SCM2Fctn)  # SCM2功能
-        self.DSMnfstBtn.clicked.connect(self.DSMnfstFctn)  # DS舱单功能
 
     def MnfstFctn(self):  # 舱单功能
         self.MsgLabel.setText("舱单运行中")
@@ -59,10 +59,12 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         if os.path.exists(AKE951FilePath) == False:  # AKE951文件不存在
             self.MsgLabel.setText("AKE951文件不存在！！")
             return
-        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/3/'  # ULDStock目录路径
+        Day2MonthEAYear2 = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMMyy').upper()  # 2位数字日 + 大写英语缩写月 + 2位数字年
         import datetime
-        DateDT = datetime.datetime.strptime(Day2MonthEA, '%d%b')  # 日期字符串转日期格式
+        DateDT = datetime.datetime.strptime(Day2MonthEAYear2, '%d%b%y')  # 日期字符串转日期格式
         DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
+        Year2Month2 = DateDT.strftime('%y%m')  # 日期格式转日期字符串并大写
+        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
         Date = DateDT.strftime('%d%b').upper()  # 日期格式转日期字符串并大写
         ULDStkFileName = Date + ' PVG ULD STOCK.xlsx'  # ULDStock文件名
         ULDStkFilePath = ULDStkDirPath + ULDStkFileName  # ULDStock文件路径
@@ -102,7 +104,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         if os.path.exists(LWS952FilePath) == False:  # LWS952文件不存在
             self.MsgLabel.setText("LWS952文件不存在！！")
             return
-        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/3/'  # ULDStock目录路径
+        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
         ULDStkFileName = Day2MonthEA + ' PVG ULD STOCK.xlsx'  # ULDStock文件名
         ULDStkFilePath = ULDStkDirPath + ULDStkFileName  # ULDStock文件路径
         if os.path.exists(ULDStkFilePath) == False:  # ULDStock文件不存在
@@ -155,7 +157,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         if os.path.exists(UCM951CFilePath) == False:  # UCM951C文件不存在
             self.MsgLabel.setText("UCM951C文件不存在！！")
             return
-        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/3/'  # ULDStock目录路径
+        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
         Day2MonthEA = DateDT.strftime('%d%b').upper()  # 日期格式转日期字符串并大写
         ULDStkFileName = Day2MonthEA + ' PVG ULD STOCK.xlsx'  # ULDStock文件名
         ULDStkFilePath = ULDStkDirPath + ULDStkFileName  # ULDStock文件路径
@@ -179,7 +181,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         if os.path.exists(CPM952FilePath) == False:  # CPM951文件不存在
             self.MsgLabel.setText("CPM952文件不存在！！")
             return
-        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/3/'  # ULDStock目录路径
+        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
         from PyQt5.QtCore import QLocale
         Day2MonthEA = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM').upper()  # 2位数字日 + 大写英语缩写月
         ULDStkFileName = Day2MonthEA + ' PVG ULD STOCK.xlsx'  # ULDStock文件名
@@ -195,6 +197,27 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         DelULDStkST(ULDStkFilePath)  # 删除集装器在ULD Stock页
         self.MsgLabel.setText("ULD952删除完成")
 
+    def RentalMnfstFctn(self):  # 租板舱单功能
+        self.MsgLabel.setText("租板舱单运行中")
+        self.MsgLabel.repaint()  # MsgLabel重绘
+        Year2Month2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
+        Day2 = self.DateDE.date().toString('dd')  # 2位数字日
+        OutDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/OUT/'  # OUT目录路径
+        MnfstFilePath = OutDirPath + '舱单 - 副本.xlsx'  # 舱单副本表格文件路径
+        import os
+        if os.path.exists(MnfstFilePath) == False:  # 舱单副本表格文件不存在
+            self.MsgLabel.setText("舱单副本表格文件不存在！！")
+            return
+        from ReadExcl.Mnfst.Function import ReadFltMnfstST
+        ReadFltMnfstST(MnfstFilePath)  # 读取舱单副本表格航班舱单页
+        from ReadExcl.Mnfst.Function import ReadULDMnfstST
+        ReadULDMnfstST(MnfstFilePath)  # 读取舱单副本表格ULD舱单页
+        from WritExcl.RentalMnfst.Function import ReadMnfstLst
+        ReadMnfstLst()  # 读取舱单对象列表
+        from WritExcl.RentalMnfst.Function import WritRentalMnfstST
+        WritRentalMnfstST(MnfstFilePath)  # 写租板舱单页
+        self.MsgLabel.setText("租板舱单录入完成")
+
     def SCM1Fctn(self):  # SCM1功能
         self.MsgLabel.setText("SCM1运行中")
         self.MsgLabel.repaint()  # MsgLabel重绘
@@ -204,7 +227,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
             self.MsgLabel.setText("SCM PACTL文件不存在！！")
             return
         Year2Month2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
-        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/3/'  # ULDStock目录路径
+        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
         from PyQt5.QtCore import QLocale
         Day2MonthEA = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM').upper()  # 2位数字日 + 大写英语缩写月
         ULDStkFileName = Day2MonthEA + ' PVG ULD STOCK.xlsx'  # ULDStock文件名
@@ -227,7 +250,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
             self.MsgLabel.setText("SCM PACTL文件不存在！！")
             return
         Year2Month2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
-        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/3/'  # ULDStock目录路径
+        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
         from PyQt5.QtCore import QLocale
         Day2MonthEA = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM').upper()  # 2位数字日 + 大写英语缩写月
         ULDStkFileName = Day2MonthEA + ' PVG ULD STOCK.xlsx'  # ULDStock文件名
@@ -242,24 +265,3 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         from WritTXT.SCM.Function import WritSCM
         WritSCM(SCMFilePath, SCM)  # 写SCM文件
         self.MsgLabel.setText("SCM2完成")
-
-    def DSMnfstFctn(self):  # DS舱单功能
-        self.MsgLabel.setText("DS舱单运行中")
-        self.MsgLabel.repaint()  # MsgLabel重绘
-        Year2Month2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
-        Day2 = self.DateDE.date().toString('dd')  # 2位数字日
-        OutDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/OUT/'  # OUT目录路径
-        MnfstFilePath = OutDirPath + '舱单 - 副本.xlsx'  # 舱单副本表格文件路径
-        import os
-        if os.path.exists(MnfstFilePath) == False:  # 舱单副本表格文件不存在
-            self.MsgLabel.setText("舱单副本表格文件不存在！！")
-            return
-        from ReadExcl.Mnfst.Function import ReadFltMnfstST
-        ReadFltMnfstST(MnfstFilePath)  # 读取舱单副本表格航班舱单页
-        from ReadExcl.Mnfst.Function import ReadULDMnfstST
-        ReadULDMnfstST(MnfstFilePath)  # 读取舱单副本表格ULD舱单页
-        from WritExcl.DSMnfst.Function import ReadMnfstLst
-        ReadMnfstLst()  # 读取舱单对象列表
-        from WritExcl.DSMnfst.Function import WritDSMnfstST
-        WritDSMnfstST(MnfstFilePath)  # 写DS舱单页
-        self.MsgLabel.setText("DS舱单录入完成")

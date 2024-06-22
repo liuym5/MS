@@ -23,12 +23,13 @@ def ReadStk(ST, Type, r1, r2):  # 读取ULD
             if No == '':  # 号为空
                 NoNoTF = True  # 无号为是
                 break
+            ULDNo = No  # 号
             Owner = 'MS'  # 所有人为MS
             if No[-2:] in ('R7', 'R9', 'C6'):  # 所有人为R7或R9或C6
-                No = No[:5]  # 号
+                ULDNo = No[:5]  # 号
                 Owner = No[-2:]  # 所有人
             from ReadTXT.UCM951.Class import UCMULD
-            UCMULDTmp = UCMULD(Type, No, Owner)  # 创建UCMULD对象
+            UCMULDTmp = UCMULD(Type, ULDNo, Owner)  # 创建UCMULD对象
             from ReadTXT.UCM951.Variable import UCMULDLst
             UCMULDLst.append(UCMULDTmp)  # 添加UCMULD对象到UCMULD对象列表
 
