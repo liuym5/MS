@@ -31,3 +31,7 @@ sys.exit(MSApp.exec_())
 #     print(dsuld.__dict__)
 #     for dsshpmt in dsuld.ShptLst:
 #         print(dsshpmt.__dict__)
+
+# from ReadExcl.CBA.Variable import CBADimLst
+# for cbadim in CBADimLst:
+#     print(cbadim.__dict__)

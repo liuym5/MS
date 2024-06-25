@@ -48,9 +48,9 @@ class Ui_MSForm(object):
         self.SCM2Btn = QtWidgets.QPushButton(MSForm)
         self.SCM2Btn.setGeometry(QtCore.QRect(150, 160, 61, 31))
         self.SCM2Btn.setObjectName("SCM2Btn")
-        self.MnfstBtn = QtWidgets.QPushButton(MSForm)
-        self.MnfstBtn.setGeometry(QtCore.QRect(10, 80, 61, 31))
-        self.MnfstBtn.setObjectName("MnfstBtn")
+        self.PRELOADBtn = QtWidgets.QPushButton(MSForm)
+        self.PRELOADBtn.setGeometry(QtCore.QRect(10, 80, 61, 31))
+        self.PRELOADBtn.setObjectName("PRELOADBtn")
 
         self.retranslateUi(MSForm)
         QtCore.QMetaObject.connectSlotsByName(MSForm)
@@ -67,4 +67,4 @@ class Ui_MSForm(object):
         self.ULD952Btn.setText(_translate("MSForm", "ULD952"))
         self.SCM1Btn.setText(_translate("MSForm", "SCM1"))
         self.SCM2Btn.setText(_translate("MSForm", "SCM2"))
-        self.MnfstBtn.setText(_translate("MSForm", "舱单"))
+        self.PRELOADBtn.setText(_translate("MSForm", "PRELOAD"))

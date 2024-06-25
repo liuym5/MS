@@ -1,0 +1,1 @@
+CBADimLst = []  # CBADim对象列表

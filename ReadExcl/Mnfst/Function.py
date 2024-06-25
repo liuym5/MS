@@ -2,16 +2,17 @@ def ReadFltMnfstST(Path):  # 读取舱单副本表格航班舱单页
     import pandas as pd
     df = pd.read_excel(Path, header=None)  # 读取舱单副本表格航班舱单页
     for r in range(len(df)):  # 遍历所有行
-        AWBNo = df.iloc[r][1]  # 得到运单号
-        Dest = df.iloc[r][4]  # 得到目的地
-        SHC = df.iloc[r][6]  # 得到特殊操作代码
-        ManDesc = df.iloc[r][7]  # 得到品名
-        Pcs = df.iloc[r][8]  # 得到件数
-        Weight = df.iloc[r][9]  # 得到重量
-        ChgWt = df.iloc[r][10]  # 得到计费重量
-        Vol = df.iloc[r][11]  # 得到体积
+        Seq = df.iloc[r][0]  # 序号
+        AWBNo = df.iloc[r][1]  # 运单号
+        Dest = df.iloc[r][4]  # 目的地
+        SHC = df.iloc[r][6]  # 特殊操作代码
+        ManDesc = df.iloc[r][7]  # 品名
+        Pcs = df.iloc[r][8]  # 件数
+        Weight = df.iloc[r][9]  # 重量
+        ChgWt = df.iloc[r][10]  # 计费重量
+        Vol = df.iloc[r][11]  # 体积
         from ReadExcl.Mnfst.Class import Shpmt
-        ShpmtTmp = Shpmt(AWBNo, Dest, SHC, ManDesc, Pcs, Weight, ChgWt, Vol)  # 创建Shpmt对象
+        ShpmtTmp = Shpmt(Seq, AWBNo, Dest, SHC, ManDesc, Pcs, Weight, ChgWt, Vol)  # 创建Shpmt对象
         from ReadExcl.Mnfst.Variable import MnfstLst
         MnfstLst.append(ShpmtTmp)  # 添加到航班舱单Shpmt对象列表
 
