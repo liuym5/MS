@@ -259,6 +259,7 @@ def AddUCMULD(ULDLst, ST, Tup2, Type):  # 添加UCMULD
                         ST.Cells(r, c).NumberFormat = '@'  # 单元格格式为文本
                         ST.Cells(r, c).Value = No  # 写号
                         ST.Cells(r, c).Interior.ColorIndex = 6  # 单元格背景颜色为6黄色
+                        ST.Cells(r, c).HorizontalAlignment = 3  # 单元格为3水平居中
                         print(ucmuld.FullULDNo + '不在库存！！！')  # 打印不在库存集装器号
                         del ULDLst[0]  # 删除ULDLst首项
                         break

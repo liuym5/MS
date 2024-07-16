@@ -17,7 +17,7 @@ def ReadFltMnfstST(Path):  # 读取舱单副本表格航班舱单页
         MnfstLst.append(ShpmtTmp)  # 添加到航班舱单Shpmt对象列表
 
 def ReadULDMnfstST(Path):  # 读取舱单副本表格ULD舱单页
-    TypeTup = ('PMC', 'PAG', 'PLA', 'AKE', 'P1P')  # 类型元组
+    TypeTup = ('PMC', 'PAG', 'PLA', 'PAJ', 'P1P', 'AKE')  # 类型元组
     import pandas as pd
     df = pd.read_excel(Path, sheet_name=1, header=None)  # 读取舱单副本表格ULD舱单页
     for r in range(len(df)):  # 遍历所有行

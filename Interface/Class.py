@@ -7,8 +7,8 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         self.setupUi(self)
         from PyQt5.QtCore import QDate
         self.DateDE.setDate(QDate.currentDate())  # 设置成当天日期
-        self.PRELOADBtn.clicked.connect(self.PRELOADFctn)  # 舱单功能
         self.ULD951Btn.clicked.connect(self.ULD951Fctn)  # ULD951功能
+        self.PRELOADBtn.clicked.connect(self.PRELOADFctn)  # PRELOAD功能
         self.LWS952Btn.clicked.connect(self.LWS952Fctn)  # LWS952功能
         self.ULDMnfstBtn.clicked.connect(self.ULDMnfstFctn)  # ULD舱单功能
         self.UCM951Btn.clicked.connect(self.UCM951Fctn)  # UCM951功能
@@ -16,40 +16,6 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         self.RentalMnfstBtn.clicked.connect(self.RentalMnfstFctn)  # 租板舱单功能
         self.SCM1Btn.clicked.connect(self.SCM1Fctn)  # SCM1功能
         self.SCM2Btn.clicked.connect(self.SCM2Fctn)  # SCM2功能
-
-    def PRELOADFctn(self):  # PRELOAD功能
-        self.MsgLabel.setText("PRELOAD运行中")
-        self.MsgLabel.repaint()  # MsgLabel重绘
-        Year2Month2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
-        Day2 = self.DateDE.date().toString('dd')  # 2位数字日
-        OutDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/OUT/'  # OUT目录路径
-        MnfstFilePath = OutDirPath + '舱单 - 副本.xlsx'  # 舱单副本表格文件路径
-        import os
-        if os.path.exists(MnfstFilePath) == False:  # 舱单副本表格文件不存在
-            self.MsgLabel.setText("舱单副本表格文件不存在！！")
-            return
-        Day2DirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/'  # Day2目录路径
-        CBAFilePath = Day2DirPath + 'CBA.xlsx'  # CBA表格文件路径
-        if os.path.exists(CBAFilePath) == False:  # CBA表格文件不存在
-            self.MsgLabel.setText("CBA表格文件不存在！！")
-            return
-        Month1DirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/1/'  # Month1目录路径
-        from PyQt5.QtCore import QLocale
-        Day2MonthEYear2 = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMMyy').upper()  # 2位数字日 + 大写英语缩写月 + 2位数字年
-        PRELOADFilePath = Month1DirPath + 'Booking list MS952 ' + Day2MonthEYear2 + ' preload.xlsx'  # BookingList表格文件路径
-        if os.path.exists(PRELOADFilePath) == False:  # BookingList表格文件不存在
-            self.MsgLabel.setText("BookingList表格文件不存在！！")
-            return
-        from ReadExcl.Mnfst.Function import ReadFltMnfstST
-        ReadFltMnfstST(MnfstFilePath)  # 读取舱单副本表格航班舱单页
-        from ReadExcl.CBA.Function import ReadCBAST
-        ReadCBAST(CBAFilePath)  # 读取CBA表格CBA页
-        from ReadExcl.CBA.Function import ReadDim
-        ReadDim()  # 读取Dim
-        Date = self.DateDE.date().toString('yyyy/M/d')  # 4位数字年 + 1位数字月 + 1位数字日
-        from WritExcl.PRELOAD.Function import WritPRELOADST
-        WritPRELOADST(PRELOADFilePath, Date)  # 写PRELOAD页
-        self.MsgLabel.setText("PRELOAD录入完成")
 
     def ULD951Fctn(self):  # ULD951功能
         self.MsgLabel.setText("ULD951运行中")
@@ -98,6 +64,40 @@ class MSMainForm(QMainWindow, Ui_MSForm):
             from WritExcl.ULDStk.Function import WritUCMULDStkST
             WritUCMULDStkST(ULDStkFilePath)  # 写UCM到ULDStock页
         self.MsgLabel.setText("ULD951录入完成")
+
+    def PRELOADFctn(self):  # PRELOAD功能
+        self.MsgLabel.setText("PRELOAD运行中")
+        self.MsgLabel.repaint()  # MsgLabel重绘
+        Year2Month2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
+        Day2 = self.DateDE.date().toString('dd')  # 2位数字日
+        OutDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/OUT/'  # OUT目录路径
+        MnfstFilePath = OutDirPath + '舱单 - 副本.xlsx'  # 舱单副本表格文件路径
+        import os
+        if os.path.exists(MnfstFilePath) == False:  # 舱单副本表格文件不存在
+            self.MsgLabel.setText("舱单副本表格文件不存在！！")
+            return
+        Day2DirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/'  # Day2目录路径
+        CBAFilePath = Day2DirPath + 'CBA.xlsx'  # CBA表格文件路径
+        if os.path.exists(CBAFilePath) == False:  # CBA表格文件不存在
+            self.MsgLabel.setText("CBA表格文件不存在！！")
+            return
+        Month1DirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/1/'  # Month1目录路径
+        from PyQt5.QtCore import QLocale
+        Day2MonthEYear2 = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMMyy').upper()  # 2位数字日 + 大写英语缩写月 + 2位数字年
+        PRELOADFilePath = Month1DirPath + 'Booking list MS952 ' + Day2MonthEYear2 + ' preload.xlsx'  # BookingList表格文件路径
+        if os.path.exists(PRELOADFilePath) == False:  # BookingList表格文件不存在
+            self.MsgLabel.setText("BookingList表格文件不存在！！")
+            return
+        from ReadExcl.Mnfst.Function import ReadFltMnfstST
+        ReadFltMnfstST(MnfstFilePath)  # 读取舱单副本表格航班舱单页
+        from ReadExcl.CBA.Function import ReadCBAST
+        ReadCBAST(CBAFilePath)  # 读取CBA表格CBA页
+        from ReadExcl.CBA.Function import ReadDim
+        ReadDim()  # 读取Dim
+        Date = self.DateDE.date().toString('yyyy/M/d')  # 4位数字年 + 1位数字月 + 1位数字日
+        from WritExcl.PRELOAD.Function import WritPRELOADST
+        WritPRELOADST(PRELOADFilePath, Date)  # 写PRELOAD页
+        self.MsgLabel.setText("PRELOAD录入完成")
 
     def LWS952Fctn(self):  # LWS952功能
         self.MsgLabel.setText("LWS952运行中")

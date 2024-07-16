@@ -31,7 +31,7 @@ class Ui_MSForm(object):
         self.RentalMnfstBtn.setGeometry(QtCore.QRect(10, 160, 61, 31))
         self.RentalMnfstBtn.setObjectName("RentalMnfstBtn")
         self.ULD951Btn = QtWidgets.QPushButton(MSForm)
-        self.ULD951Btn.setGeometry(QtCore.QRect(80, 80, 61, 31))
+        self.ULD951Btn.setGeometry(QtCore.QRect(10, 80, 61, 31))
         self.ULD951Btn.setObjectName("ULD951Btn")
         self.LWS952Btn = QtWidgets.QPushButton(MSForm)
         self.LWS952Btn.setGeometry(QtCore.QRect(150, 80, 61, 31))
@@ -49,7 +49,7 @@ class Ui_MSForm(object):
         self.SCM2Btn.setGeometry(QtCore.QRect(150, 160, 61, 31))
         self.SCM2Btn.setObjectName("SCM2Btn")
         self.PRELOADBtn = QtWidgets.QPushButton(MSForm)
-        self.PRELOADBtn.setGeometry(QtCore.QRect(10, 80, 61, 31))
+        self.PRELOADBtn.setGeometry(QtCore.QRect(80, 80, 61, 31))
         self.PRELOADBtn.setObjectName("PRELOADBtn")
 
         self.retranslateUi(MSForm)
