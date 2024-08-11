@@ -149,8 +149,11 @@ def DelULD(ST, Type, Tup2):  # 删除ULD
                 ST.Cells(r, c).Value = ''  # 写空
                 ST.Cells(r, c).Interior.ColorIndex = 2  # 单元格背景颜色为2白色
             else:  # 有号
-                if ST.Cells(r, c).Interior.ColorIndex in (3, 8, 33):  # 单元格背景颜色为3红色或8蓝色或33蓝色
+                ColorIndex = ST.Cells(r, c).Interior.ColorIndex  # 单元格背景颜色号
+                if ColorIndex in (3, 8, 33):  # 单元格背景颜色为3红色或8蓝色或33蓝色
                     print(Type + ULDNo + Owner + '进港时板箱号错误！！！')
+                elif ColorIndex == 47:  # 单元格背景颜色为47紫色
+                    print(Type + ULDNo + Owner + '无进港记录！！！')
                 ST.Cells(r, c).Value = ''  # 写空
                 ST.Cells(r, c).Interior.ColorIndex = 2  # 单元格背景颜色为2白色
     NoStkPrt(ULDLst, Type)  # 打印不在库存集装器号
