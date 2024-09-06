@@ -121,8 +121,9 @@ class MSMainForm(QMainWindow, Ui_MSForm):
             return
         from ReadPDF.LWS.Function import ReadLWS
         ReadLWS(LWS952FilePath)  # 读取LWS
+        Year4Month1Day1 = self.DateDE.date().toString('yyyy-M-d')  # 4位数字年1位数字月1位数字日
         from WritExcl.ULDStk.Function import DelULDStkST
-        DelULDStkST(ULDStkFilePath)  # 删除集装器在ULD Stock页
+        DelULDStkST(ULDStkFilePath, Year4Month1Day1)  # 删除集装器在ULD Stock页
         self.MsgLabel.setText("LWS952更新完成")
 
     def ULDMnfstFctn(self):  # ULD舱单功能
@@ -202,8 +203,9 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         ReadCPM(CPM952FilePath)  # 读取CPM951,返回是否有叠板
         from ReadTXT.CPM.Function import ReadCPMULD
         ReadCPMULD()  # 读取CPMULDLst
+        Year4Month1Day1 = self.DateDE.date().toString('yyyy-M-d')  # 4位数字年1位数字月1位数字日
         from WritExcl.ULDStk.Function import DelULDStkST
-        DelULDStkST(ULDStkFilePath)  # 删除集装器在ULD Stock页
+        DelULDStkST(ULDStkFilePath, Year4Month1Day1)  # 删除集装器在ULD Stock页
         self.MsgLabel.setText("ULD952删除完成")
 
     def RentalMnfstFctn(self):  # 租板舱单功能

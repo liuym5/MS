@@ -2,7 +2,7 @@ def ReadLWS(Path):  # 读取LWS
     from ReadPDF.Function import ReadPage1PDF
     LWS = ReadPage1PDF(Path)  # 返回LWS952第1页PDF文件文本
     LWS = LWS.split('-')  # 以-分割字符串
-    TypeTup = ('AKE', 'PMC', 'PLA', 'PAG', 'P1P')  # 类型元组
+    TypeTup = ('PMC', 'PAG', 'PLA', 'PAJ', 'P1P', 'AKE')  # 类型元组
     i = 0  # LWS字符串列表下标
     for item in LWS:  # 遍历LWS字符串列表
         from ReadTXT.CPM.Function import FindType
