@@ -136,7 +136,7 @@ def DelULD(ULDStkST, UnilodeST, Type, Tup2):  # 删除ULD
                 break
             ULDNo = No
             Owner = 'MS'  # 所有人为MS
-            if No[-2:] in ('R7', 'R9', 'C6'):  # 所有人为R7或R9或C6
+            if No[-2:] in ('R7', 'R9', 'C6', 'KE'):  # 所有人为R7或R9或C6
                 ULDNo = No[:5]  # 号
                 Owner = No[-2:]  # 所有人
             if NoTF(ULDLst, ULDNo) == False:  # 无号
