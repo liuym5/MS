@@ -232,9 +232,9 @@ def ChkUCMULDStkST(Path):  # 检查UCMULD在ULD Stock页
     from Interface.Variable import CfgMS
     ChkUCMULD(ULDStkST, 'PMC', CfgMS.PMCTup2)  # 检查PMC
     ChkUCMULD(ULDStkST, 'PAG', CfgMS.PAGTup2)  # 检查PAG
-    ChkUCMULD(ULDStkST, 'PAJ', CfgMS.PAGTup2)  # 检查PAJ
     ChkUCMULD(ULDStkST, 'PLA', CfgMS.PLATup2)  # 检查PLA
     ChkUCMULD(ULDStkST, 'AKE', CfgMS.AKETup2)  # 检查AKE
+    ChkUCMULD(ULDStkST, 'PAJ', CfgMS.PAGTup2)  # 检查PAJ
     ULDStkWB.Save()  # 保存ULDStock表格
     ULDStkWB.Close()  # 关闭ULDStock表格对象
     XL.Quit()  # 关闭Excel
