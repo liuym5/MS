@@ -173,11 +173,11 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         if os.path.exists(ULDStkFilePath) == False:  # ULDStock文件不存在
             self.MsgLabel.setText("ULDStock文件不存在！！")
             return
+        # UnilodeSCMFilePath = ULDStkDirPath + 'Unilode SCM.txt'  # Unilode SCM文件路径
+        # if os.path.exists(UnilodeSCMFilePath) == False:  # Unilode SCM文件不存在
+        #     self.MsgLabel.setText("Unilode SCM文件不存在！！")
+        #     return
         from ReadPDF.LWS.Function import ReadLWS
-        UnilodeSCMFilePath = ULDStkDirPath + 'Unilode SCM.txt'  # Unilode SCM文件路径
-        if os.path.exists(UnilodeSCMFilePath) == False:  # Unilode SCM文件不存在
-            self.MsgLabel.setText("Unilode SCM文件不存在！！")
-            return
         ReadLWS(LWS952FilePath)  # 读取LWS
         Year4Month1Day1 = self.DateDE.date().toString('yyyy-M-d')  # 4位数字年1位数字月1位数字日
         from WritExcl.ULDStk.Function import DelULDStkST
