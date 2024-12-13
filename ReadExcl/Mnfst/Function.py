@@ -17,7 +17,7 @@ def ReadFltMnfstST(Path):  # 读取舱单副本表格航班舱单页
         MnfstLst.append(ShpmtTmp)  # 添加到航班舱单Shpmt对象列表
 
 def ReadULDMnfstST(Path):  # 读取舱单副本表格ULD舱单页
-    TypeTup = ('PMC', 'PAG', 'PLA', 'PAJ', 'P1P', 'AKE')  # 类型元组
+    TypeTup = ('PMC', 'PAG', 'PLA', 'PAJ', 'BULK', 'P1P', 'AKE')  # 类型元组
     import pandas as pd
     df = pd.read_excel(Path, sheet_name=1, header=None)  # 读取舱单副本表格ULD舱单页
     for r in range(len(df)):  # 遍历所有行
@@ -27,8 +27,12 @@ def ReadULDMnfstST(Path):  # 读取舱单副本表格ULD舱单页
             j = C0.find(TypeTmp)  # 找类型
             if j > -1:  # 找到类型
                 Type = TypeTmp  # 得到类型
-                No = C0[j + 4 : j + 9]  # 得到号码
-                Owner = C0[j + 10 : j + 12]  # 得到所有人
+                if Type != 'BULK':  # 类型不为BULK
+                    No = C0[j + 4 : j + 9]  # 得到号码
+                    Owner = C0[j + 10 : j + 12]  # 得到所有人
+                else:  # 类型为BULK
+                    No = ''  # 没有号码
+                    Owner = ''  # 没有所有人
                 j = r + 3  # 得到运单号行号
                 C1 = str(df.iloc[j][1])  # 得到第1列字符串
                 while C1 != 'Total':  # 不是Total字符串
