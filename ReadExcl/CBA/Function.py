@@ -2,7 +2,7 @@ def ReadCBAST(Path):  # 读取CBA表格CBA页
     import pandas as pd
     df = pd.read_excel(Path, sheet_name='CBA')  # 读取CBA表格CBA页
     for r in range(len(df)):  # 遍历所有行
-        AWBNo = df.iloc[r][2]  # 运单号
+        AWBNo = df.iloc[r][1]  # 运单号
         Dim = df.iloc[r][8]  # 尺寸
         from ReadExcl.CBA.Class import CBADim
         CBADimTmp = CBADim(AWBNo, Dim)  # 创建CBADim对象

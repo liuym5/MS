@@ -79,15 +79,11 @@ def ReadUnilodeST(Path, Date):  # 读取Unilode页
     return CreateUnilodeSCM(Date)  # 创建UnilodeSCM,返回SCM
 
 def ReadUnilode(ST, Type, Tup2):  # 读取Unilode
-    NoNoTF = False  # 无号为否
     for r in range(Tup2[0], Tup2[1]):  # 遍历行
-        if NoNoTF:  # 无号为是
-            break
         for c in range(2, 7):  # 遍历列
             No = ST.Cells(r, c).Text  # 号
             if No == '':  # 号为空
-                NoNoTF = True  # 无号为是
-                break
+                return
             ULDNo = No[:5]  # 号
             if Type == 'PAG' and ULDNo in ('17080', '56773'):  # PAJ的号
                 continue  # 跳过PAJ的号
@@ -123,3 +119,17 @@ def ReadUnilodeULD(Type):  # 读取Unilode ULD,返回ULD
             ULD = ULD + '.T' + str(j) + '\n'  # 添加有小于6个集装器的最后一行
     return ULD
 
+def ReadPallet(ST, Type, Tup2):  # 读取大或小板
+    if Type in ('PMC' 'PAG' 'PAJ'):  # 类型为PMC或PAG或PAJ
+        for r in range(Tup2[0], Tup2[1]):  # 遍历行
+            for c in range(2, 7):  # 遍历列
+                No = ST.Cells(r, c).Text  # 号
+                if No == '':  # 号为空
+                    return
+                if No[-2:] in ('R7', 'R9', 'C6', 'KE'):  # 所有人为R7或R9或C6或KE
+                    ULDNo = No[:5]  # 号
+                    Owner = No[-2:]  # 所有人
+                    from ReadTXT.UCM951.Class import UCMULD
+                    UnilodeTmp = UCMULD(Type, ULDNo, Owner)  # 创建UCMULD对象
+                    from ReadExcl.ULDStk.Variable import UnilodeLst
+                    UnilodeLst.append(UnilodeTmp)  # 添加UCMULD对象到UCMULD对象列表

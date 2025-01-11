@@ -125,6 +125,10 @@ def DelULD(ULDStkST, UnilodeST, Type, Tup2):  # 删除ULD
     NoNoTF = False  # 无号为否
     ColorULDLst = []  # ColorULD列表
     if len(ULDLst) == 0:  # ULDLst长度等于0
+        DelUnilode(UnilodeST, Type, Tup2)  # 删除Unilode集装器
+        from ReadExcl.ULDStk.Function import ReadPallet
+        ReadPallet(ULDStkST, Type, Tup2)  # 读取大或小板
+        WritUnilode(UnilodeST, Type, Tup2)  # 写Unilode集装器
         return
     for r in range(Tup2[0], Tup2[1]):  # 遍历行
         if NoNoTF:  # 无号为是
@@ -136,7 +140,7 @@ def DelULD(ULDStkST, UnilodeST, Type, Tup2):  # 删除ULD
                 break
             ULDNo = No
             Owner = 'MS'  # 所有人为MS
-            if No[-2:] in ('R7', 'R9', 'C6', 'KE'):  # 所有人为R7或R9或C6
+            if No[-2:] in ('R7', 'R9', 'C6', 'KE'):  # 所有人为R7或R9或C6或KE
                 ULDNo = No[:5]  # 号
                 Owner = No[-2:]  # 所有人
             if NoTF(ULDLst, ULDNo) == False:  # 无号
@@ -162,6 +166,30 @@ def DelULD(ULDStkST, UnilodeST, Type, Tup2):  # 删除ULD
     cmpfun = operator.attrgetter('No')  # 参数为排序依据的属性，可以有多个，这里优先id，使用时按需求改换参数即可
     ColorULDLst.sort(key=cmpfun)  # 使用时改变列表名即可
     WritLeftULD(ColorULDLst, ULDStkST, UnilodeST, Tup2)  # 写剩余ULD
+
+def DelUnilode(UnilodeST, Type, Tup2):  # 删除Unilode集装器
+    if Type in ('PMC' 'PAG' 'PAJ'):  # 类型为PMC或PAG或PAJ
+        for r in range(Tup2[0], Tup2[1]):  # 遍历行
+            for c in range(2, 7):  # 遍历列
+                No = UnilodeST.Cells(r, c).Text  # 号
+                if No == '':  # 号为空
+                    return
+                UnilodeST.Cells(r, c).Value = ''  # Unilode页单元格写空
+
+def WritUnilode(UnilodeST, Type, Tup2):  # 写Unilode集装器
+    if Type in ('PMC' 'PAG' 'PAJ'):  # 类型为PMC或PAG或PAJ
+        from ReadExcl.ULDStk.Variable import UnilodeLst
+        UnilodeST.Cells(Tup2[0], 7).Value = len(UnilodeLst)  # 写数量
+        for r in range(Tup2[0], Tup2[1]):  # 遍历行
+            for c in range(2, 7):  # 遍历列
+                if len(UnilodeLst) == 0:  # UnilodeLst长度为0
+                    return
+                for unilode in UnilodeLst:  # 遍历UnilodeLst
+                    UnilodeST.Cells(r, c).NumberFormat = '@'  # 单元格格式为文本
+                    UnilodeST.Cells(r, c).Value = unilode.No + unilode.Owner  # UnilodeST页单元格写号
+                    UnilodeST.Cells(r, c).HorizontalAlignment = 3  # UnilodeST页单元格为3水平居中
+                    del UnilodeLst[0]  # 删除UnilodeLst第0项
+                    break
 
 def NoTF(ULDLst, No):  # 是否有号
     i = 0  # 下标为0
