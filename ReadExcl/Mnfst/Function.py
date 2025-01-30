@@ -38,7 +38,11 @@ def ReadULDMnfstST(Path):  # 读取舱单副本表格ULD舱单页
                 while C1 != 'Total':  # 不是Total字符串
                     if C1.find('077-') > -1:  # 找到077-字符串
                         AWBNo = C1  # 得到运单号
-                        Pcs = int(df.iloc[j][2].split('/')[0])  # 得到件数
+                        Pcs = df.iloc[j][2]  # 得到件数
+                        if str(Pcs).find('.') > -1:  # 件数带小数点
+                            Pcs = int(str(int(df.iloc[j][2])).split('/')[0])  # 得到件数
+                        else:  # 件数不带小数点
+                            Pcs = int((df.iloc[j][2]).split('/')[0])  # 得到件数
                         Weight = float(df.iloc[j][4])  # 得到重量
                         from ReadExcl.Mnfst.Class import ShpmtULD
                         ShpmtULDTmp = ShpmtULD(Type, No, Owner, Pcs, Weight)  # 创建ShpmtULD对象
