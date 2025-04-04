@@ -4,7 +4,7 @@ def WritPRELOADST(Path, Date):  # 写PRELOAD页
     XL.Visible = False  # 表格不可见
     PRELOADWB = XL.Workbooks.Open(Path)  # 返回PRELOAD表格对象
     PRELOADST = PRELOADWB.Worksheets('PRE-LOAD')  # 返回PRELOAD页对象
-    Date = Date + ' 1:10'  # 日期
+    Date = Date + ' 23:55'  # 日期
     PRELOADST.Cells(4, 3).Value = Date  # 写日期
     r = 7  # 初始行号
     from ReadExcl.Mnfst.Variable import MnfstLst

@@ -63,7 +63,7 @@ def WritUCMULDStkST(Path):  # 写UCM到ULDStock页
     WritUCMULD(ULDStkST, 'PMC', CfgMS.PMCTup2)  # 写PMC
     WritUCMULD(ULDStkST, 'PAG', CfgMS.PAGTup2)  # 写PAG
     WritUCMULD(ULDStkST, 'PLA', CfgMS.PLATup2)  # 写PLA
-    WritCPMULD(ULDStkST, 'PAJ', CfgMS.PAGTup2)  # 写PAJ
+    WritUCMULD(ULDStkST, 'PAJ', CfgMS.PAGTup2)  # 写PAJ
     ULDStkWB.Save()  # 保存ULDStock表格
     ULDStkWB.Close()  # 关闭ULDStock表格对象
     XL.Quit()  # 关闭Excel
