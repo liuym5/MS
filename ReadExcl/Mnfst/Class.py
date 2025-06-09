@@ -56,10 +56,10 @@ class ShpmtULD:  # ShpmtULD类
 
     def GetVolChgWt(self, LeftWt, LeftVol, LeftChgWt):  # 返回剩余重量,剩余体积,剩余计费重量
         if self.Weight < LeftWt:  # 还有剩余重量
-            self.Vol = round(self.Weight / LeftWt * LeftVol, 2)  # 体积
+            self.Vol = round(self.Weight / LeftWt * LeftVol, 3)  # 体积
             self.ChgWt = round(self.Weight / LeftWt * LeftChgWt, 2)  # 计费重量
             LeftWt = round(LeftWt - self.Weight, 2)  # 剩余重量
-            LeftVol = round(LeftVol - self.Vol, 2)  # 剩余体积
+            LeftVol = round(LeftVol - self.Vol, 3)  # 剩余体积
             LeftChgWt = round(LeftChgWt - self.ChgWt, 2)  # 剩余计费重量
             return LeftWt, LeftVol, LeftChgWt  # 返回剩余重量,剩余体积,剩余计费重量
         self.Vol = LeftVol  # 体积
