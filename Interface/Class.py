@@ -11,8 +11,8 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         self.PRELOADBtn.clicked.connect(self.PRELOADFctn)  # PRELOAD功能
         self.ULDMnfstBtn.clicked.connect(self.ULDMnfstFctn)  # ULD舱单功能
         self.UCM951Btn.clicked.connect(self.UCM951Fctn)  # UCM951功能
-        self.LWS952Btn.clicked.connect(self.LWS952Fctn)  # LWS952功能
         self.ULD952Btn.clicked.connect(self.ULD952Fctn)  # ULD952功能
+        self.LWS952Btn.clicked.connect(self.LWS952Fctn)  # LWS952功能
         self.AKE952Btn.clicked.connect(self.AKE952Fctn)  # AKE952功能
         self.RentalMnfstBtn.clicked.connect(self.RentalMnfstFctn)  # 租板舱单功能
         self.SCM1Btn.clicked.connect(self.SCM1Fctn)  # SCM1功能
@@ -154,6 +154,34 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         ChkUCMULDStkST(ULDStkFilePath)  # 检查UCMULD在ULD Stock页
         self.MsgLabel.setText("UCM951比对完成")
 
+    def ULD952Fctn(self):  # ULD952功能
+        self.MsgLabel.setText("ULD952运行中")
+        self.MsgLabel.repaint()  # MsgLabel重绘
+        Year2Month2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
+        Day2 = self.DateDE.date().toString('dd')  # 2位数字日
+        OutDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/OUT/'  # OUT目录路径
+        CPM952FilePath = OutDirPath + 'CPM.txt'  # CPM952文件路径
+        import os
+        if os.path.exists(CPM952FilePath) == False:  # CPM952文件不存在
+            self.MsgLabel.setText("CPM952文件不存在！！")
+            return
+        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
+        from PyQt5.QtCore import QLocale
+        Day2MonthEA = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM').upper()  # 2位数字日 + 大写英语缩写月
+        ULDStkFileName = Day2MonthEA + ' PVG ULD STOCK.xlsx'  # ULDStock文件名
+        ULDStkFilePath = ULDStkDirPath + ULDStkFileName  # ULDStock文件路径
+        if os.path.exists(ULDStkFilePath) == False:  # ULDStock文件不存在
+            self.MsgLabel.setText("ULDStock文件不存在！！")
+            return
+        from ReadTXT.CPM.Function import ReadCPM
+        ReadCPM(CPM952FilePath)  # 读取CPM951,返回是否有叠板
+        from ReadTXT.CPM.Function import ReadCPMULD
+        ReadCPMULD()  # 读取CPMULDLst
+        Year4Month1Day1 = self.DateDE.date().toString('yyyy-M-d')  # 4位数字年1位数字月1位数字日
+        from WritExcl.ULDStk.Function import DelULDStkST
+        DelULDStkST(ULDStkFilePath, Year4Month1Day1)  # 删除集装器在ULD Stock页
+        self.MsgLabel.setText("ULD952删除完成")
+
     def LWS952Fctn(self):  # LWS952功能
         self.MsgLabel.setText("LWS952运行中")
         self.MsgLabel.repaint()  # MsgLabel重绘
@@ -189,34 +217,6 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         # from WritTXT.SCM.Function import WritSCM
         # WritSCM(UnilodeSCMFilePath, UnilodeSCM)  # 写Unilode SCM文件
         self.MsgLabel.setText("LWS952更新完成")
-
-    def ULD952Fctn(self):  # ULD952功能
-        self.MsgLabel.setText("ULD952运行中")
-        self.MsgLabel.repaint()  # MsgLabel重绘
-        Year2Month2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
-        Day2 = self.DateDE.date().toString('dd')  # 2位数字日
-        OutDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/OUT/'  # OUT目录路径
-        CPM952FilePath = OutDirPath + 'CPM.txt'  # CPM952文件路径
-        import os
-        if os.path.exists(CPM952FilePath) == False:  # CPM952文件不存在
-            self.MsgLabel.setText("CPM952文件不存在！！")
-            return
-        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
-        from PyQt5.QtCore import QLocale
-        Day2MonthEA = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM').upper()  # 2位数字日 + 大写英语缩写月
-        ULDStkFileName = Day2MonthEA + ' PVG ULD STOCK.xlsx'  # ULDStock文件名
-        ULDStkFilePath = ULDStkDirPath + ULDStkFileName  # ULDStock文件路径
-        if os.path.exists(ULDStkFilePath) == False:  # ULDStock文件不存在
-            self.MsgLabel.setText("ULDStock文件不存在！！")
-            return
-        from ReadTXT.CPM.Function import ReadCPM
-        ReadCPM(CPM952FilePath)  # 读取CPM951,返回是否有叠板
-        from ReadTXT.CPM.Function import ReadCPMULD
-        ReadCPMULD()  # 读取CPMULDLst
-        Year4Month1Day1 = self.DateDE.date().toString('yyyy-M-d')  # 4位数字年1位数字月1位数字日
-        from WritExcl.ULDStk.Function import DelULDStkST
-        DelULDStkST(ULDStkFilePath, Year4Month1Day1)  # 删除集装器在ULD Stock页
-        self.MsgLabel.setText("ULD952删除完成")
 
     def AKE952Fctn(self):  # AKE952功能
         self.MsgLabel.setText("AKE952运行中")
