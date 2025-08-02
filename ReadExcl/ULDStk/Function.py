@@ -1,6 +1,7 @@
 def ReadULDStkST(Path):  # 读取ULD Stock页
     import win32com.client
-    XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
+    XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
+    # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
@@ -66,7 +67,8 @@ def ReadULD(Type):  # 读取ULD,返回ULD
 
 def ReadUnilodeST(Path, Date):  # 读取Unilode页
     import win32com.client
-    XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
+    XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
+    # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     UnilodeST = ULDStkWB.Worksheets('Unilode')  # 返回Unilode页对象

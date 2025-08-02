@@ -1,6 +1,7 @@
 def WritCPMULDStkST(Path):  # 写CPM到ULDStock页
     import win32com.client
-    XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
+    XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
+    # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
@@ -55,7 +56,8 @@ def ReadCPMULD(Type):  # 返回ULDLst
 
 def WritUCMULDStkST(Path):  # 写UCM到ULDStock页
     import win32com.client
-    XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
+    XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
+    # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
@@ -101,7 +103,8 @@ def ReadUCMULD(Type):  # 返回ULDLst
 
 def DelULDStkST(Path, Date):  # 删除集装器在ULD Stock页
     import win32com.client
-    XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
+    XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
+    # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
@@ -253,7 +256,8 @@ def WritLeftULD(ColorULDLst, ULDStkST, UnilodeST, Tup2):  # 写剩余ULD
 
 def ChkUCMULDStkST(Path):  # 检查UCMULD在ULD Stock页
     import win32com.client
-    XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
+    XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
+    # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
@@ -320,7 +324,8 @@ def AddUCMULD(ULDLst, ST, Tup2, Type):  # 添加UCMULD
 
 def ChkSCMULDStkST(Path):  # 检查SCM在ULD Stock页
     import win32com.client
-    XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
+    XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
+    # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象

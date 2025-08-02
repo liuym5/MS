@@ -1,6 +1,7 @@
 def WritAKE951ST(Path, Date):  # 写AKE951页
     import win32com.client
-    XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
+    XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
+    # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     AKE951WB = XL.Workbooks.Open(Path)  # 返回AKE951表格对象
     AKE951ST = AKE951WB.Worksheets('AKE951')  # 返回AKE951页对象
