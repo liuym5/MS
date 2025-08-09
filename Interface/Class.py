@@ -216,7 +216,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         # UnilodeSCM = ReadUnilodeST(ULDStkFilePath, Day2MonthEA)  # 读取Unilode页,返回Unilode SCM
         # from WritTXT.SCM.Function import WritSCM
         # WritSCM(UnilodeSCMFilePath, UnilodeSCM)  # 写Unilode SCM文件
-        self.MsgLabel.setText("LWS952更新完成")
+        self.MsgLabel.setText("LWS952删除完成")
 
     def AKE952Fctn(self):  # AKE952功能
         self.MsgLabel.setText("AKE952运行中")
