@@ -33,15 +33,15 @@ def WritCPMULD(ST, Type, Tup2):  # 写CPMULD
             if No == '':  # 没有号
                 for cpmuld in ULDLst:  # 遍历ULDLst
                     ST.Cells(r, c).NumberFormat = '@'  # 单元格格式为文本
-                    if cpmuld.Owner == 'MS':  # 所有人是MS
+                    if cpmuld.Owner in ('MS', 'CI'):  # 所有人是MS或CI
                         ST.Cells(r, c).Value = cpmuld.No # 写号
-                    else:  # 所有人不是MS
+                    else:  # 所有人不是MS或CI
                         ST.Cells(r, c).Value = cpmuld.No + cpmuld.Owner  # 写号所有人
                     ST.Cells(r, c).Interior.ColorIndex = 6  # 单元格背景颜色为6黄色
                     ST.Cells(r, c).HorizontalAlignment = 3  # 单元格为3水平居中
-                    if cpmuld.Type == 'AKE' and cpmuld.Content in ('B', 'X'):  # 类型为AKE并且内容为B或X
+                    if cpmuld.Type == 'AKE' and cpmuld.Content in ('B', 'X', 'L'):  # 类型为AKE并且内容为B或X或L
                         ST.Cells(r, c).Font.ColorIndex = 3  # 单元格文字颜色为3红色
-                    else:  # 货运相关ULD
+                    else:  # 类型为AKE并且内容C
                         ST.Cells(r, c).Font.ColorIndex = 1  # 单元格文字颜色为1黑色
                     del ULDLst[0]  # 删除ULDLst第0项
                     break

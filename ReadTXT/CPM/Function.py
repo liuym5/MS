@@ -12,7 +12,7 @@ def ReadCPM(Path):  # 读取CPM,返回是否有叠板
         if i > -1:  # 找到类型
             No = item[i + 3:i + 7]  # 4位号
             Owner = item[i + 7:i + 9]  # 所有人
-            if No.isdigit() and Owner in ('MS', 'R7', 'R9', 'C6', 'K8', 'KE'):  # 4位号为数字并且所有人为MS,R7,R9,C6,K8,KE
+            if No.isdigit() and Owner in ('MS', 'R7', 'R9', 'CI', 'C6', 'K8', 'KE'):  # 4位号为数字并且所有人为MS或R7或R9或CI或C6或K8或KE
                 No = '0' + No  # 号前面加个0补充到5位
                 from ReadTXT.CPM.Class import CPMULD
                 CPMULDTmp = CPMULD(Type, No, Owner, Content)  # 创建CPMULD对象
@@ -20,7 +20,7 @@ def ReadCPM(Path):  # 读取CPM,返回是否有叠板
                 CPMULDLst.append(CPMULDTmp)  # 添加CPMULD对象到CPMULD对象列表
             No = item[i + 3:i + 8]  # 5位号
             Owner = item[i + 8:i + 10]  # 所有人
-            if No.isdigit() and Owner in ('MS', 'R7', 'R9', 'C6', 'K8', 'KE'):  # 5位号为数字并且所有人为MS,R7,R9,C6,K8,KE
+            if No.isdigit() and Owner in ('MS', 'R7', 'R9', 'CI', 'C6', 'K8', 'KE'):  # 5位号为数字并且所有人为MS或R7或R9或CI或C6或K8或KE
                 from ReadTXT.CPM.Class import CPMULD
                 CPMULDTmp = CPMULD(Type, No, Owner, Content)  # 创建CPMULD对象
                 from ReadTXT.CPM.Variable import CPMULDLst
@@ -46,6 +46,8 @@ def FindContent(item):  # 返回内容
         return 'X'  # 返回X
     if item.rfind('/C') > -1:  # 右找到/C
         return 'C' # 返回C
+    if item.rfind('/L') > -1:  # 右找到/L
+        return 'L'  # 返回L
 
 def ReadCPMULD():  # 读取CPMULDLst
     from ReadTXT.CPM.Variable import CPMULDLst
