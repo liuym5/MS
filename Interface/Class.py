@@ -191,7 +191,8 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         from PyQt5.QtCore import QLocale
         Day2MonthEA = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM').upper()  # 2位数字日 + 大写英语缩写月
         # LWS952FileName = 'DLWS ' + Day2MonthEA + '.pdf'  # LWS952文件名
-        LWS952FileName = 'MS952 ' + Day2MonthEA + ' DLWS.pdf'  # LWS952文件名
+        # LWS952FileName = 'MS952 ' + Day2MonthEA + ' DLWS.pdf'  # LWS952文件名
+        LWS952FileName = 'MS952 DLWS ' + Day2MonthEA + '.pdf'  # LWS952文件名
         LWS952FilePath = OutDirPath + LWS952FileName  # LWS952文件路径
         import os
         if os.path.exists(LWS952FilePath) == False:  # LWS952文件不存在
