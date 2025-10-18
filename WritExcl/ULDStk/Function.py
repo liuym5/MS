@@ -282,13 +282,18 @@ def ChkUCMULD(ST, Type, Tup2):  # 检查UCMULD
                 if len(ULDLst) == 0:  # ULDLst长度为0
                     break
                 Color = ST.Cells(r, c).Interior.ColorIndex  # 单元格背景颜色号
-                No = ST.Cells(r, c).Text  # 号
-                if No[-2:] in ('R7', 'R9', 'C6'):  # 所有人为R7或R9或C6
-                    No = No[:5]  # 号
+                NoOwner = ST.Cells(r, c).Text  # 号后缀
+                Owner = NoOwner[-2:]  # 后缀
+                if Owner in ('R7', 'R9', 'C6'):  # 所有人为R7或R9或C6
+                    No = NoOwner[:5]  # 号
+                    Owner = NoOwner[-2:]  # 所有人
+                else:  # 所有人为MS
+                    No = NoOwner  # 号
+                    Owner = 'MS'  # 所有人为MS
                 if Color == 6:  # 单元格背景颜色为6黄色
                     i = 0  # 下标为0
                     for ucmuld in ULDLst:  # 遍历ULDLst
-                        if No == ucmuld.No:  # 有号
+                        if No + Owner == ucmuld.No + ucmuld.Owner:  # 有号
                             ST.Cells(r, c).Font.ColorIndex = 1  # 单元格文字颜色为1黑色
                             ST.Cells(r, c).Interior.ColorIndex = 4  # 单元格背景颜色为4绿色
                             del ULDLst[i]  # 删除ULDLst第i项
