@@ -26,11 +26,11 @@ def ReadUCM(Path):  # 读取UCM
                 UCMULDTmp = UCMULD(Type, No, Owner)  # 创建UCMULD对象
                 from ReadTXT.UCM951.Variable import UCMULDLst
                 UCMULDLst.append(UCMULDTmp)  # 添加UCMULD对象到UCMULD对象列表
+    DelULD()  # 删除重复ULD
     import operator
     cmpfun = operator.attrgetter('No')  # 参数为排序依据的属性，可以有多个，这里优先id，使用时按需求改换参数即可
     from ReadTXT.UCM951.Variable import UCMULDLst
     UCMULDLst.sort(key=cmpfun)  # 使用时改变列表名即可
-    DelULD()  # 删除重复ULD
 
 def DelULD():  # 删除重复ULD
     from ReadTXT.CPM.Variable import CPMULDLst
@@ -40,5 +40,4 @@ def DelULD():  # 删除重复ULD
         for ucmuld in UCMULDLst:  # 遍历UCMULDLst
                if cpmuld.No == ucmuld.No:  # No相同
                    del UCMULDLst[i]  # 删除相同No列表项
-                   break
                i += 1  # 下标加1
