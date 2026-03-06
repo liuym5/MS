@@ -1,0 +1,74 @@
+class Flight():  # Flight类
+    Date = ''  # 日期
+    ACType = ''  # 机型
+    ACNo = ''  # 机号
+    Load = ''  # 载重
+    TOW = ''  # 起飞重量
+    PAX = ''  # 人数
+    GW = ''  # 重量
+    ULoad = ''  # 剩余载重
+    CW = ''  # 计费重量
+    CPMC = ''  # 货PMC
+    CPAG = ''  # 货PAG
+    CPLA = ''  # 货PLA
+    CAKE = ''  # 货AKE
+    LPMC = ''  # 行李PMC
+    LPAG = ''  # 行李PAG
+    LPLA = ''  # 行李PLA
+    LAKE = ''  # 行李AKE
+    MPMC = ''  # MCOPMC
+    MPAG = ''  # MCOPAG
+    MPLA = ''  # MCOPLA
+    MAKE = ''  # MCOAKE
+    MDest = ''  # MCO目的地
+    MPcs = ''  # MCO件数
+    MGW = ''  # MCO重量
+    RPMC = ''  # 空PMC
+    RPAG = ''  # 空PAG
+    RPLA = ''  # 空PLA
+    RAKE = ''  # 空AKE
+    OPMC = ''  # 拉货PMC
+    OPAG = ''  # 拉货PAG
+    OPLA = ''  # 拉货PLA
+    OAKE = ''  # 拉货AKE
+    OGW = ''  # 拉货重量
+    ORsn = ''  # 拉货原因
+
+    def __init__(self, Date, ACType, ACNo, Load, TOW, PAX, GW, ULoad, CW, CPMC,
+                       CPAG, CPLA, CAKE, LPMC, LPAG, LPLA, LAKE, MPMC, MPAG, MPLA,
+                       MAKE, MDest, MPcs, RPMC, RPAG, RPLA, RAKE, OPMC, OPAG, OPLA,
+                       OAKE, OGW, ORsn):  # 构造函数
+        self.Date = Date  # 日期
+        self.ACType = ACType  # 机型
+        self.ACNo = ACNo  # 机号
+        self.Load = Load  # 载重
+        self.TOW = TOW  # 起飞重量
+        self.PAX = PAX  # 人数
+        self.GW = GW  # 重量
+        self.ULoad = ULoad  # 剩余载重
+        self.CW = CW  # 计费重量
+        self.CPMC = CPMC  # 货PMC
+        self.CPAG = CPAG  # 货PAG
+        self.CPLA = CPLA  # 货PLA
+        self.CAKE = CAKE  # 货AKE
+        self.LPMC = LPMC  # 行李PMC
+        self.LPAG = LPAG  # 行李PAG
+        self.LPLA = LPLA  # 行李PLA
+        self.LAKE = LAKE  # 行李AKE
+        self.MPMC = MPMC  # MCOPMC
+        self.MPAG = MPAG  # MCOPAG
+        self.MPLA = MPLA  # MCOPLA
+        self.MAKE = MAKE  # MCOAKE
+        self.MDest = MDest  # MCO目的地
+        self.MPcs = MPcs  # MCO件数
+        self.MGW = 32 * self.MPcs  # MCO重量
+        self.RPMC = RPMC  # 空PMC
+        self.RPAG = RPAG  # 空PAG
+        self.RPLA = RPLA  # 空PLA
+        self.RAKE = RAKE  # 空AKE
+        self.OPMC = OPMC  # 拉货PMC
+        self.OPAG = OPAG  # 拉货PAG
+        self.OPLA = OPLA  # 拉货PLA
+        self.OAKE = OAKE  # 拉货AKE
+        self.OGW = OGW  # 拉货重量
+        self.ORsn = ORsn  # 拉货原因

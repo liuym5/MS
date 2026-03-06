@@ -14,6 +14,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         self.ULD952Btn.clicked.connect(self.ULD952Fctn)  # ULD952功能
         self.LWS952Btn.clicked.connect(self.LWS952Fctn)  # LWS952功能
         self.AKE952Btn.clicked.connect(self.AKE952Fctn)  # AKE952功能
+        self.FlightBtn.clicked.connect(self.FlightFctn)  # Flight功能
         self.RentalMnfstBtn.clicked.connect(self.RentalMnfstFctn)  # 租板舱单功能
         self.SCM1Btn.clicked.connect(self.SCM1Fctn)  # SCM1功能
         self.SCM2Btn.clicked.connect(self.SCM2Fctn)  # SCM2功能
@@ -192,7 +193,8 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         Day2MonthEA = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM').upper()  # 2位数字日 + 大写英语缩写月
         # LWS952FileName = 'DLWS ' + Day2MonthEA + '.pdf'  # LWS952文件名
         # LWS952FileName = 'MS952 ' + Day2MonthEA + ' DLWS.pdf'  # LWS952文件名
-        LWS952FileName = 'MS952 DLWS ' + Day2MonthEA + '.pdf'  # LWS952文件名
+        LWS952FileName = 'MS952 ' + Day2MonthEA + ' FINAL DLWS.pdf'  # LWS952文件名
+        # LWS952FileName = 'MS952 DLWS ' + Day2MonthEA + '.pdf'  # LWS952文件名
         LWS952FilePath = OutDirPath + LWS952FileName  # LWS952文件路径
         import os
         if os.path.exists(LWS952FilePath) == False:  # LWS952文件不存在
@@ -246,6 +248,74 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         from WritExcl.ULDStk.Function import DelULDStkST
         DelULDStkST(ULDStkFilePath, Year4Month1Day1)  # 删除集装器在ULD Stock页
         self.MsgLabel.setText("AKE952删除完成")
+
+    def FlightFctn(self):  # Flight功能
+        self.MsgLabel.setText("Flight运行中")
+        self.MsgLabel.repaint()  # MsgLabel重绘
+        Year2 = self.DateDE.date().toString('yy')  # 2位数字年
+        Year4 = self.DateDE.date().toString('yyyy')  # 4位数字年
+        Month1 = self.DateDE.date().toString('M')  # 1位数字月
+        Month2 = self.DateDE.date().toString('MM')  # 2位数字月
+        from PyQt5.QtCore import QLocale
+        MonthE = QLocale(QLocale.English).toString(self.DateDE.date(), 'MMM').upper()  # 大写英语缩写月
+        Day1 = self.DateDE.date().toString('d')  # 1位数字日
+        Day2 = self.DateDE.date().toString('dd')  # 2位数字日
+        DailyDirPath = 'C:/Files/MS/日常/'  # 日常目录路径
+        StatisticFilePath = DailyDirPath + Year2 + Month2 + '/2/' + MonthE + ' ' + Year4 + ' cargo statistic.xlsx'  # Statistic表格文件路径
+        import os
+        if os.path.exists(StatisticFilePath) == False:  # Statistic表格文件不存在
+            self.MsgLabel.setText("Statistic表格文件不存在！！")
+            return
+        WaterproofFilePath = DailyDirPath + Year2 + Month2 + '/3/PVG waterproof cloth details ' + Year4 + '.xlsx' # 雨布表格文件路径
+        if os.path.exists(WaterproofFilePath) == False:  # 雨布表格文件不存在
+            self.MsgLabel.setText("雨布表格文件不存在！！")
+            return
+        FourDirPath = DailyDirPath + Year2 + Month2 + '/4/'  # 4目录路径
+        FlightsFilePath = FourDirPath + 'Flights.xlsx'  # Flights表格文件路径
+        if os.path.exists(FlightsFilePath) == False:  # Flights表格文件不存在
+            self.MsgLabel.setText("Flights表格文件不存在！！")
+            return
+        MCOFilePath = FourDirPath + 'MCO STATISTICS_PVG.xlsx'  # MCO表格文件路径
+        if os.path.exists(MCOFilePath) == False:  # MCO表格文件不存在
+            self.MsgLabel.setText("MCO表格文件不存在！！")
+            return
+        MonitorFilePath = FourDirPath + 'Monitoring load PVG.xlsx'  # Monitor表格文件路径
+        if os.path.exists(MonitorFilePath) == False:  # MCO表格文件不存在
+            self.MsgLabel.setText("Monitor表格文件不存在！！")
+            return
+        Monitor2FilePath = FourDirPath + 'Monitoring load PVG - 副本.xlsx'  # Monitor副本表格文件路径
+        if os.path.exists(Monitor2FilePath) == False:  # MCO表格文件不存在
+            self.MsgLabel.setText("Monitor副本表格文件不存在！！")
+            return
+        VerifyFilePath = DailyDirPath + Year2 + Month2 + '/财务/对账.xlsx'  # 对账表格文件路径
+        if os.path.exists(VerifyFilePath) == False:  # 对账表格文件不存在
+            self.MsgLabel.setText("对账表格文件不存在！！")
+            return
+        Date = Year4 + '/' + Month1 +'/' + Day1  # 日期
+        MonthEYear2 = MonthE + Year2  # 大写英语缩写月 + 2位数字年
+        from ReadExcl.Flight.Function import Getr
+        r = Getr(StatisticFilePath, MonthEYear2, 0, Date)  # 得到Statistic表格文件当月当年页第0列日期行号
+        from ReadExcl.Flight.Function import ReadFlight
+        CurFlight = ReadFlight(FlightsFilePath, Year4, Date)  # 返回Flights表格文件当年页当天记录条对象
+        from WritExcl.Flights.Function import WritStatistic
+        WritStatistic(StatisticFilePath, MonthEYear2, r, CurFlight)  # 写Statistic表格文件
+        r = Getr(WaterproofFilePath, Year4, 0, Date)  # 得到雨布表格文件当年页第0列日期行号
+        from WritExcl.Flights.Function import WritWaterproof
+        WritWaterproof(WaterproofFilePath, Year4, r, CurFlight)  # 写雨布表格文件
+        r = Getr(MCOFilePath, 'FLIGHT', 2, Date)  # 得到MCO表格文件FLIGHT页第2列日期行号
+        from WritExcl.Flights.Function import WritMCO
+        WritMCO(MCOFilePath, 'FLIGHT', r, CurFlight)  # 写MCO表格文件
+        r = Getr(MonitorFilePath, Year4, 1, Date)  # 得到Monitor表格文件当年页第1列日期行号
+        from WritExcl.Flights.Function import WritMonitor
+        WritMonitor(MonitorFilePath, Year4, r, CurFlight)  # 写Monitor表格文件
+        from WritExcl.Flights.Function import WritMonitor2
+        WritMonitor2(Monitor2FilePath, 'Sheet1', 5, CurFlight)  # 写Monitor副本表格文件
+        r = Getr(VerifyFilePath, 'OperaFlightList', 4, Date)  # 得到对账表格文件OperaFlightList页第4列日期行号
+        from WritExcl.Flights.Function import WritVerify
+        WritVerify(VerifyFilePath, 'OperaFlightList', r, CurFlight)  # 写对账表格文件
+        from WritTXT.Flights.Function import WritFlight
+        WritFlight(FourDirPath+'Flights.txt', Day2+MonthE, CurFlight)  # 写Flights文本文件
+        self.MsgLabel.setText("Flight录入完成")
 
     def RentalMnfstFctn(self):  # 租板舱单功能
         self.MsgLabel.setText("租板舱单运行中")

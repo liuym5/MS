@@ -2,7 +2,7 @@ def ReadUCM(Path):  # 读取UCM
     from ReadTXT.Function import ReadTXT
     UCM = ReadTXT(Path)  # 返回UCM TXT文件文本
     UCM = UCM.split('.')  # 以.分割字符串
-    TypeTup = ('AKE', 'PMC', 'PLA', 'PAG', 'PAJ', 'P1P')  # 类型元组
+    TypeTup = ('AKE', 'PMC', 'PLA', 'FLA', 'PAG', 'PAJ', 'P1P')  # 类型元组
     for item in UCM:  # 遍历UCM字符串列表
         from ReadTXT.CPM.Function import FindType
         Type, i = FindType(TypeTup, item)  # 返回类型,类型首字母下标

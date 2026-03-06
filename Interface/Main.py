@@ -3,6 +3,7 @@ from Interface.Variable import MSApp
 
 sys.exit(MSApp.exec_())
 
+# df.fillna('', inplace=True)  # NaN填充为空字符串
 # pd.set_option('display.max_rows', None)  # 显示所有行
 # pd.set_option('expand_frame_repr', False)  # 显示所有列
 # print(df)  # 打印数据框架
