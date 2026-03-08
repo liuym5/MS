@@ -61,7 +61,7 @@ class Flight():  # Flight类
         self.MAKE = MAKE  # MCOAKE
         self.MDest = MDest  # MCO目的地
         self.MPcs = MPcs  # MCO件数
-        self.MGW = 32 * self.MPcs  # MCO重量
+        self.MGW = str(32 * int(self.MPcs))  # MCO重量
         self.RPMC = RPMC  # 空PMC
         self.RPAG = RPAG  # 空PAG
         self.RPLA = RPLA  # 空PLA

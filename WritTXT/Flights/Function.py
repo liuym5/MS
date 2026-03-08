@@ -94,7 +94,7 @@ def WritFlight(Path, Date, Flight):  # 写Flights文本文件
         ULDLst.append(Flight.RPAG + 'PAG')  # 添加空PAG到空集装器列表
     if Flight.RPLA != '':  # 有空PLA
         ULDLst.append(Flight.RPLA + 'PLA')  # 添加空PLA到空集装器列表
-    if Flight.RPMC != '':  # 有空PMC
+    if Flight.RAKE != '':  # 有空AKE
         ULDLst.append(Flight.RAKE + 'AKE')  # 添加空AKE到空集装器列表
     Len = len(ULDLst)  # 空集装器列表长度
     ULD = ''  # 空集装器为空
