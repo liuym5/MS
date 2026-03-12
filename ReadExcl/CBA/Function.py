@@ -1,6 +1,6 @@
-def ReadCBAST(Path):  # 读取CBA表格CBA页
+def ReadCBAST(Path, SN):  # 读取CBA表格当天日期页
     import pandas as pd
-    df = pd.read_excel(Path, sheet_name='CBA')  # 读取CBA表格CBA页
+    df = pd.read_excel(Path, sheet_name=SN)  # 读取CBA表格CBA页
     for r in range(len(df)):  # 遍历所有行
         AWBNo = df.iloc[r][1]  # 运单号
         Dim = df.iloc[r][8]  # 尺寸
