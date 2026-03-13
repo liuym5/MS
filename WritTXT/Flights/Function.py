@@ -74,7 +74,7 @@ def WritFlight(Path, Date, Flight):  # 写Flights文本文件
     if Flight.OPAG != '':  # 有拉货PAG
         ULDLst.append(Flight.OPAG + 'PAG')  # 添加拉货PAG到拉货集装器列表
     if Flight.OPLA != '':  # 有拉货PLA
-        ULDLst.append(Flight.OPMC + 'PLA')  # 添加拉货PLA到拉货集装器列表
+        ULDLst.append(Flight.OPLA + 'PLA')  # 添加拉货PLA到拉货集装器列表
     if Flight.OAKE != '':  # 有拉货AKE
         ULDLst.append(Flight.OAKE + 'AKE')  # 添加拉货AKE到拉货集装器列表
     Len = len(ULDLst)  # 拉货集装器列表长度
