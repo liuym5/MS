@@ -107,8 +107,7 @@ def WritFlight(Path, Date, Flight):  # 写Flights文本文件
     Txt = Txt + ULD
     if Flight.ORsn == 'P':  # 限载
         Txt = Txt + ' 限载'
-    Txt = (Txt + '\n'
-           '\n')
-    TXT = open(Path, 'a', encoding='utf-8')  # 返回文本文件对象
-    TXT.write(Txt)  # 写文本文件
-    TXT.close()  # 关闭文本文件对象
+    elif Flight.ORsn == 'B':  # 限平衡
+        Txt = Txt + ' 平衡'
+    from WritTXT.Function import WritTXT
+    WritTXT(Path, 'w+', Txt)  # 写TXT文件
