@@ -130,7 +130,7 @@ def DelULD(ULDStkST, UnilodeST, Type, Tup2):  # 删除ULD
     if len(ULDLst) == 0:  # ULDLst长度等于0
         DelUnilode(UnilodeST, Type, Tup2)  # 删除Unilode集装器
         from ReadExcl.ULDStk.Function import ReadPallet
-        ReadPallet(ULDStkST, Type, Tup2)  # 读取大或小板
+        ReadPallet(ULDStkST, Type, Tup2)  # 读取板
         WritUnilode(UnilodeST, Type, Tup2)  # 写Unilode集装器
         return
     for r in range(Tup2[0], Tup2[1]):  # 遍历行
@@ -162,7 +162,7 @@ def DelULD(ULDStkST, UnilodeST, Type, Tup2):  # 删除ULD
                     print(Type + ULDNo + Owner + '无进港记录！！！')
                 ULDStkST.Cells(r, c).Value = ''  # ULDStock页单元格写空
                 ULDStkST.Cells(r, c).Interior.ColorIndex = 2  # ULDStock页单元格背景颜色为2白色
-            if Type in ('PMC' 'PAG' 'PAJ'):  # 类型为PMC或PAG或PAJ
+            if Type in ('PMC' 'PAG' 'PAJ' 'PLA'):  # 类型为PMC或PAG或PAJ或PLA
                 UnilodeST.Cells(r, c).Value = ''  # Unilode页单元格写空
     NoStkPrt(ULDLst, Type)  # 打印不在库存集装器号
     import operator
@@ -171,7 +171,7 @@ def DelULD(ULDStkST, UnilodeST, Type, Tup2):  # 删除ULD
     WritLeftULD(ColorULDLst, ULDStkST, UnilodeST, Tup2)  # 写剩余ULD
 
 def DelUnilode(UnilodeST, Type, Tup2):  # 删除Unilode集装器
-    if Type in ('PMC' 'PAG' 'PAJ'):  # 类型为PMC或PAG或PAJ
+    if Type in ('PMC' 'PAG' 'PAJ' 'PLA'):  # 类型为PMC或PAG或PAJ或PLA
         for r in range(Tup2[0], Tup2[1]):  # 遍历行
             for c in range(2, 7):  # 遍历列
                 No = UnilodeST.Cells(r, c).Text  # 号
@@ -180,7 +180,7 @@ def DelUnilode(UnilodeST, Type, Tup2):  # 删除Unilode集装器
                 UnilodeST.Cells(r, c).Value = ''  # Unilode页单元格写空
 
 def WritUnilode(UnilodeST, Type, Tup2):  # 写Unilode集装器
-    if Type in ('PMC' 'PAG' 'PAJ'):  # 类型为PMC或PAG或PAJ
+    if Type in ('PMC' 'PAG' 'PAJ' 'PLA'):  # 类型为PMC或PAG或PAJ或PLA
         from ReadExcl.ULDStk.Variable import UnilodeLst
         UnilodeST.Cells(Tup2[0], 7).Value = len(UnilodeLst)  # 写数量
         for r in range(Tup2[0], Tup2[1]):  # 遍历行

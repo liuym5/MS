@@ -121,8 +121,8 @@ def ReadUnilodeULD(Type):  # 读取Unilode ULD,返回ULD
             ULD = ULD + '.T' + str(j) + '\n'  # 添加有小于6个集装器的最后一行
     return ULD
 
-def ReadPallet(ST, Type, Tup2):  # 读取大或小板
-    if Type in ('PMC' 'PAG' 'PAJ'):  # 类型为PMC或PAG或PAJ
+def ReadPallet(ST, Type, Tup2):  # 读取板
+    if Type in ('PMC' 'PAG' 'PAJ' 'PLA'):  # 类型为PMC或PAG或PAJ或PLA
         for r in range(Tup2[0], Tup2[1]):  # 遍历行
             for c in range(2, 7):  # 遍历列
                 No = ST.Cells(r, c).Text  # 号
