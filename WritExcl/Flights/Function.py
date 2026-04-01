@@ -218,9 +218,8 @@ def WritVerify(Path, SN, r, Flight):  # 写对账表格文件
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     if ST.Cells(r, 2).Text == 'MS0951':  # 进港航班
-        ST.Cells(r+1, 6).Value = Flight.GW  # 下1行写重量
-    else:  # 出港航班
-        ST.Cells(r, 6).Value = Flight.GW  # 写重量
+        r += 1  # 行号加1
+    ST.Cells(r, 7).Value = Flight.GW  # 写重量
     WB.Save()  # 保存Statistic表格
     WB.Close()  # 关闭Statistic表格对象
     XL.Quit()  # 关闭Excel
