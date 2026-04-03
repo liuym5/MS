@@ -83,7 +83,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
             self.MsgLabel.setText("舱单副本表格文件不存在！！")
             return
         Day2DirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/'  # Day2目录路径
-        CBAFilePath = Day2DirPath + Day2_MonthEA_Year2 + '预配 - 副本.xlsx'  # CBA表格文件路径
+        CBAFilePath = Day2DirPath + Day2_MonthEA_Year2 + ' CBA - 副本.xlsx'  # CBA表格文件路径
         if os.path.exists(CBAFilePath) == False:  # CBA表格文件不存在
             self.MsgLabel.setText("CBA表格文件不存在！！")
             return
