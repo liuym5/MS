@@ -138,6 +138,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         DateDT = datetime.datetime.strptime(Date, '%y%m%d')  # 日期字符串转日期格式
         if datetime.date.today().weekday() != 6:  # 非周日
             DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
+        # DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
         Date = DateDT.strftime('%y%m%d')  # 日期格式转日期字符串
         Year2Month2 = Date[:4]  # 2位数字年 + 2位数字月
         Day2 = Date[4:]  # 2位数字日
