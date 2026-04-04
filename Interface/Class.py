@@ -39,7 +39,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         Day2MonthEAYear2 = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMMyy').upper()  # 2位数字日 + 大写英语缩写月 + 2位数字年
         import datetime
         DateDT = datetime.datetime.strptime(Day2MonthEAYear2, '%d%b%y')  # 日期字符串转日期格式
-        if datetime.date.today().weekday() != 6:  # 非周日
+        if datetime.date.today().weekday() < 6:  # 非周日
             DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
         Year2Month2 = DateDT.strftime('%y%m')  # 日期格式转日期字符串并大写
         ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
@@ -136,7 +136,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         Date = self.DateDE.date().toString('yyMMdd')  # 2位数字年2位数字月2位数字日
         import datetime
         DateDT = datetime.datetime.strptime(Date, '%y%m%d')  # 日期字符串转日期格式
-        if datetime.date.today().weekday() != 6:  # 非周日
+        if datetime.date.today().weekday() < 6:  # 非周日
             DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
         # DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
         Date = DateDT.strftime('%y%m%d')  # 日期格式转日期字符串
