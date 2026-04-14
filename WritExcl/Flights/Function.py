@@ -125,7 +125,7 @@ def WritMonitor(Path, SN, r, Flight):  # 写Monitor表格文件
     ST.Cells(r, 21).Value = Flight.OPLA  # 写拉货PLA
     ST.Cells(r, 22).Value = Flight.OAKE  # 写拉货AKE
     if Flight.ORsn == 'P':  # 限载
-        ST.Cells(r, 23).Value = 'Payload restricion'  # 写载量限制
+        ST.Cells(r, 23).Value = 'Payload restriction'  # 写载量限制
     elif Flight.ORsn == 'S':  # 限舱位
         ST.Cells(r, 23).Value = 'Lack of space'  # 写舱位限制
     elif Flight.ORsn == 'B':  # 限平衡
@@ -183,7 +183,7 @@ def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
     ST.Cells(r, 21).Value = Flight.OPLA  # 写拉货PLA
     ST.Cells(r, 22).Value = Flight.OAKE  # 写拉货AKE
     if Flight.ORsn == 'P':  # 限载
-        ST.Cells(r, 23).Value = 'Payload restricion'  # 写载量限制
+        ST.Cells(r, 23).Value = 'Payload restriction'  # 写载量限制
     elif Flight.ORsn == 'S':  # 限舱位
         ST.Cells(r, 23).Value = 'Lack of space'  # 写舱位限制
     elif Flight.ORsn == 'B':  # 限平衡
