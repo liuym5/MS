@@ -26,7 +26,7 @@ def WritAKENo(ST, Date):  # 写AKENo
                 ST.Columns(c).HorizontalAlignment = -4108  # 设置单元格中对齐
                 ST.Cells(r, c).NumberFormat = '@'  # 设置单元格格式为文本
                 ST.Cells(r, c).Value = cpmuld.No  # 写AKENo
-                if cpmuld.Content in ('B', 'X'):  # 内容为B或X
+                if cpmuld.Content in ('B', 'X', 'L'):  # 内容为B或X或L
                     ST.Cells(r, c).Font.ColorIndex = 3  # 单元格文字颜色为3红色
                 c += 1  # 列号加1
             if c == 7:  # 列号等于7
