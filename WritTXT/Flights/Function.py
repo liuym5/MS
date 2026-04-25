@@ -3,11 +3,7 @@ def WritFlight(Path, Date, Flight):  # 写Flights文本文件
            '航班号/航班日期：MS952/' + Date + '\n'
            '实际起飞时间： 23:55（延误0min， 原因：不详）\n'
            '机型：')
-    if Flight.ACType == 'B787-900':  # 机型为787-900
-        ACType = 'B789'
-    else:  # 机型为777-300
-        ACType = 'B773'
-    Txt = (Txt + ACType + '\n'
+    Txt = (Txt + Flight.ACType + '\n'
            '旅客人数：' + Flight.PAX + '人\n'
            '旅客使用板箱：')
     ULDLst = []  # 行李集装器列表为空

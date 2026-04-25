@@ -1,3 +1,14 @@
+def WritACType(Path, Flight):  # 写PRELOAD表格文件机号
+    import win32com.client
+    XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
+    XL.Visible = False  # 表格不可见
+    WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
+    ST = WB.Worksheets('PRE-LOAD')  # 返回当月当年页对象
+    ST.Cells(3, 3).Value = Flight.ACType  # 写机号
+    WB.Save()  # 保存Statistic表格
+    WB.Close()  # 关闭Statistic表格对象
+    XL.Quit()  # 关闭Excel
+
 def WritStatistic(Path, SN, r, Flight):  # 写Statistic表格文件
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel

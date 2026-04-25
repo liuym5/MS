@@ -39,8 +39,9 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         Day2MonthEAYear2 = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMMyy').upper()  # 2位数字日 + 大写英语缩写月 + 2位数字年
         import datetime
         DateDT = datetime.datetime.strptime(Day2MonthEAYear2, '%d%b%y')  # 日期字符串转日期格式
-        if datetime.date.today().weekday() < 6:  # 非周日
-            DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
+        # if datetime.date.today().weekday() < 6:  # 非周日
+        #     DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
+        # DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
         Year2Month2 = DateDT.strftime('%y%m')  # 日期格式转日期字符串并大写
         ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
         Date = DateDT.strftime('%d%b').upper()  # 日期格式转日期字符串并大写
@@ -136,8 +137,8 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         Date = self.DateDE.date().toString('yyMMdd')  # 2位数字年2位数字月2位数字日
         import datetime
         DateDT = datetime.datetime.strptime(Date, '%y%m%d')  # 日期字符串转日期格式
-        if datetime.date.today().weekday() < 6:  # 非周日
-            DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
+        # if datetime.date.today().weekday() < 6:  # 非周日
+        #     DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
         # DateDT = DateDT + datetime.timedelta(days=1)  # 日期加1天
         Date = DateDT.strftime('%y%m%d')  # 日期格式转日期字符串
         Year2Month2 = Date[:4]  # 2位数字年 + 2位数字月
@@ -269,6 +270,10 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         DailyDirPath = 'C:/Files/MS/日常/'  # 日常目录路径
         StatisticFilePath = DailyDirPath + Year2 + Month2 + '/2/' + MonthE + ' ' + Year4 + ' cargo statistic.xlsx'  # Statistic表格文件路径
         import os
+        PRELOADFilePath = DailyDirPath + Year2 + Month2 + '/1/Booking list MS952 ' + Day2 + MonthE + Year2 + ' preload.xlsx'  # BookingList表格文件路径
+        if os.path.exists(PRELOADFilePath) == False:  # BookingList表格文件不存在
+            self.MsgLabel.setText("BookingList表格文件不存在！！")
+            return
         if os.path.exists(StatisticFilePath) == False:  # Statistic表格文件不存在
             self.MsgLabel.setText("Statistic表格文件不存在！！")
             return
@@ -299,10 +304,12 @@ class MSMainForm(QMainWindow, Ui_MSForm):
             return
         Date = Year4 + '/' + Month1 +'/' + Day1  # 日期
         MonthEYear2 = MonthE + Year2  # 大写英语缩写月 + 2位数字年
-        from ReadExcl.Flight.Function import Getr
-        r = Getr(StatisticFilePath, MonthEYear2, 0, Date)  # 得到Statistic表格文件当月当年页第0列日期行号
         from ReadExcl.Flight.Function import ReadFlight
         CurFlight = ReadFlight(FlightsFilePath, Year4, Date)  # 返回Flights表格文件当年页当天记录条对象
+        from WritExcl.Flights.Function import WritACType
+        WritACType(PRELOADFilePath, CurFlight)  # 写PRELOAD表格文件机号
+        from ReadExcl.Flight.Function import Getr
+        r = Getr(StatisticFilePath, MonthEYear2, 0, Date)  # 得到Statistic表格文件当月当年页第0列日期行号
         from WritExcl.Flights.Function import WritStatistic
         WritStatistic(StatisticFilePath, MonthEYear2, r, CurFlight)  # 写Statistic表格文件
         r = Getr(WaterproofFilePath, Year4, 0, Date)  # 得到雨布表格文件当年页第0列日期行号
