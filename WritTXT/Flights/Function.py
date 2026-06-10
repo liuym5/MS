@@ -1,9 +1,12 @@
 def WritFlight(Path, Date, Flight):  # 写Flights文本文件
     Txt = ('站点: PVG\n'
-           '航班号/航班日期：MS952/' + Date + '\n'
+           '航班号/航班日期：MS952/')
+    import datetime
+    DateDT = datetime.datetime.strptime(Date, '%y%m%d')  # 日期字符串转日期格式
+    Date = DateDT.strftime('%d%b').upper()  # 日期格式转日期字符串并大写
+    Txt = (Txt + Date + '\n'
            '实际起飞时间： 23:55（延误0min， 原因：不详）\n'
-           '机型：')
-    Txt = (Txt + Flight.ACType + '\n'
+           '机型：' + Flight.ACType + '\n'
            '旅客人数：' + Flight.PAX + '人\n'
            '旅客使用板箱：')
     ULDLst = []  # 行李集装器列表为空
@@ -40,7 +43,25 @@ def WritFlight(Path, Date, Flight):  # 写Flights文本文件
         if i + 1 < Len:  # 不是列表最后
             ULD = ULD + '+'  # 末尾添加加号
     if ULD != '':  # 有MCO集装器
-        Txt = Txt + '(其中MCO, ' + ULD + ', ' + Flight.MDest.replace('/', ' ') + ')\n'
+        Txt = Txt + '(其中MCO, ' + ULD + ', ' + Flight.MDest.replace('/', ' ')
+        PMCOLst = []  # 预报MCO集装器列表为空
+        if Flight.PPMC != '':  # 有预报MCOPMC
+            PMCOLst.append(Flight.PPMC + 'PMC')  # 添加预报MCOPMC到预报MCO集装器列表
+        if Flight.PPAG != '':  # 有预报MCOPAG
+            PMCOLst.append(Flight.PPAG + 'PAG')  # 添加预报MCOPAG到预报MCO集装器列表
+        Len = len(PMCOLst)  # 预报MCO集装器列表长度
+        PMCO = ''  # 预报MCO集装器为空
+        for i in range(Len):  # 遍历列表
+            PMCO = PMCO + PMCOLst[i]  # 添加预报MCO集装器字符串
+            if i + 1 < Len:  # 不是列表最后
+                PMCO = PMCO + '+'  # 末尾添加加号
+        if PMCO != ULD:  # 和预报MCO有差异
+            Txt = Txt + ', 但实际客运'
+            DateDT = DateDT + datetime.timedelta(days=-1)  # 日期减1天
+            Date = DateDT.strftime('%d%b').upper()  # 日期格式转日期字符串并大写
+            Txt = Txt + Date + '预报' + PMCO + ')\n'
+        else:  # 和预报MCO一致
+            Txt = Txt + ')\n'
     else:  # 无MCO集装器
         Txt = Txt + '(无MCO)\n'
     Txt = Txt + '货运使用板箱：'

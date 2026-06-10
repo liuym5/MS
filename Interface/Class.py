@@ -327,7 +327,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         from WritExcl.Flights.Function import WritVerify
         WritVerify(VerifyFilePath, 'OperaFlightList', r, CurFlight)  # 写对账表格文件
         from WritTXT.Flights.Function import WritFlight
-        WritFlight(FourDirPath+'Flights.txt', Day2+MonthE, CurFlight)  # 写Flights文本文件
+        WritFlight(FourDirPath+'Flights.txt', Year2+Month2+Day1, CurFlight)  # 写Flights文本文件
         self.MsgLabel.setText("Flight录入完成")
 
     def RentalMnfstFctn(self):  # 租板舱单功能

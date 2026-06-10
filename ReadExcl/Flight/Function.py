@@ -22,22 +22,24 @@ def ReadFlight(Path, Year4, Date):  # 返回Flights表格文件当年页当天�
                        FlightTmp.iloc[0][14],  # 行李PAG
                        FlightTmp.iloc[0][15],  # 行李PLA
                        FlightTmp.iloc[0][16],  # 行李AKE
-                       FlightTmp.iloc[0][17],  # MCOPMC
-                       FlightTmp.iloc[0][18],  # MCOPAG
-                       FlightTmp.iloc[0][19],  # MCOPLA
-                       FlightTmp.iloc[0][20],  # MCOAKE
-                       FlightTmp.iloc[0][21],  # MCO目的地
-                       FlightTmp.iloc[0][22],  # MCO件数
-                       FlightTmp.iloc[0][23],  # 空PMC
-                       FlightTmp.iloc[0][24],  # 空PAG
-                       FlightTmp.iloc[0][25],  # 空PLA
-                       FlightTmp.iloc[0][26],  # 空AKE
-                       FlightTmp.iloc[0][27],  # 拉货PMC
-                       FlightTmp.iloc[0][28],  # 拉货PAG
-                       FlightTmp.iloc[0][29],  # 拉货PLA
-                       FlightTmp.iloc[0][30],  # 拉货AKE
-                       FlightTmp.iloc[0][31],  # 拉货重量
-                       FlightTmp.iloc[0][32]  # 拉货原因
+                       FlightTmp.iloc[0][17],  # 预报MCOPMC
+                       FlightTmp.iloc[0][18],  # 预报MCOPAG
+                       FlightTmp.iloc[0][19],  # MCOPMC
+                       FlightTmp.iloc[0][20],  # MCOPAG
+                       FlightTmp.iloc[0][21],  # MCOPLA
+                       FlightTmp.iloc[0][22],  # MCOAKE
+                       FlightTmp.iloc[0][23],  # MCO目的地
+                       FlightTmp.iloc[0][24],  # MCO件数
+                       FlightTmp.iloc[0][25],  # 空PMC
+                       FlightTmp.iloc[0][26],  # 空PAG
+                       FlightTmp.iloc[0][27],  # 空PLA
+                       FlightTmp.iloc[0][28],  # 空AKE
+                       FlightTmp.iloc[0][29],  # 拉货PMC
+                       FlightTmp.iloc[0][30],  # 拉货PAG
+                       FlightTmp.iloc[0][31],  # 拉货PLA
+                       FlightTmp.iloc[0][32],  # 拉货AKE
+                       FlightTmp.iloc[0][33],  # 拉货重量
+                       FlightTmp.iloc[0][34]  # 拉货原因
                      )  # 创建Flight对象
     return CurFlight  # 返回当年页当天记录条对象
 

@@ -16,6 +16,8 @@ class Flight():  # Flight类
     LPAG = ''  # 行李PAG
     LPLA = ''  # 行李PLA
     LAKE = ''  # 行李AKE
+    PPMC = ''  # 预报MCOPMC
+    PPAG = ''  # 预报MCOPAG
     MPMC = ''  # MCOPMC
     MPAG = ''  # MCOPAG
     MPLA = ''  # MCOPLA
@@ -35,9 +37,9 @@ class Flight():  # Flight类
     ORsn = ''  # 拉货原因
 
     def __init__(self, Date, ACType, ACNo, Load, TOW, PAX, GW, ULoad, CW, CPMC,
-                       CPAG, CPLA, CAKE, LPMC, LPAG, LPLA, LAKE, MPMC, MPAG, MPLA,
-                       MAKE, MDest, MPcs, RPMC, RPAG, RPLA, RAKE, OPMC, OPAG, OPLA,
-                       OAKE, OGW, ORsn):  # 构造函数
+                       CPAG, CPLA, CAKE, LPMC, LPAG, LPLA, LAKE, PPMC, PPAG, MPMC,
+                       MPAG, MPLA, MAKE, MDest, MPcs, RPMC, RPAG, RPLA, RAKE, OPMC,
+                       OPAG, OPLA, OAKE, OGW, ORsn):  # 构造函数
         self.Date = Date  # 日期
         self.ACType = ACType  # 机型
         self.ACNo = ACNo  # 机号
@@ -55,6 +57,8 @@ class Flight():  # Flight类
         self.LPAG = LPAG  # 行李PAG
         self.LPLA = LPLA  # 行李PLA
         self.LAKE = LAKE  # 行李AKE
+        self.PPMC = PPMC  # 预报MCOPMC
+        self.PPAG = PPAG  # 预报MCOPAG
         self.MPMC = MPMC  # MCOPMC
         self.MPAG = MPAG  # MCOPAG
         self.MPLA = MPLA  # MCOPLA
