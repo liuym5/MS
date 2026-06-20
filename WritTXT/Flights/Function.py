@@ -42,28 +42,29 @@ def WritFlight(Path, Date, Flight):  # 写Flights文本文件
         ULD = ULD + ULDLst[i]  # 添加MCO集装器字符串
         if i + 1 < Len:  # 不是列表最后
             ULD = ULD + '+'  # 末尾添加加号
+    PMCOLst = []  # 预报MCO集装器列表为空
+    if Flight.PPMC != '':  # 有预报MCOPMC
+        PMCOLst.append(Flight.PPMC + 'PMC')  # 添加预报MCOPMC到预报MCO集装器列表
+    if Flight.PPAG != '':  # 有预报MCOPAG
+        PMCOLst.append(Flight.PPAG + 'PAG')  # 添加预报MCOPAG到预报MCO集装器列表
+    Len = len(PMCOLst)  # 预报MCO集装器列表长度
+    PMCO = ''  # 预报MCO集装器为空
+    for i in range(Len):  # 遍历列表
+        PMCO = PMCO + PMCOLst[i]  # 添加预报MCO集装器字符串
+        if i + 1 < Len:  # 不是列表最后
+            PMCO = PMCO + '+'  # 末尾添加加号
     if ULD != '':  # 有MCO集装器
         Txt = Txt + '(其中MCO, ' + ULD + ', ' + Flight.MDest.replace('/', ' ')
-        PMCOLst = []  # 预报MCO集装器列表为空
-        if Flight.PPMC != '':  # 有预报MCOPMC
-            PMCOLst.append(Flight.PPMC + 'PMC')  # 添加预报MCOPMC到预报MCO集装器列表
-        if Flight.PPAG != '':  # 有预报MCOPAG
-            PMCOLst.append(Flight.PPAG + 'PAG')  # 添加预报MCOPAG到预报MCO集装器列表
-        Len = len(PMCOLst)  # 预报MCO集装器列表长度
-        PMCO = ''  # 预报MCO集装器为空
-        for i in range(Len):  # 遍历列表
-            PMCO = PMCO + PMCOLst[i]  # 添加预报MCO集装器字符串
-            if i + 1 < Len:  # 不是列表最后
-                PMCO = PMCO + '+'  # 末尾添加加号
         if PMCO != ULD:  # 和预报MCO有差异
-            Txt = Txt + ', 但实际客运'
-            DateDT = DateDT + datetime.timedelta(days=-1)  # 日期减1天
-            Date = DateDT.strftime('%d%b').upper()  # 日期格式转日期字符串并大写
-            Txt = Txt + Date + '预报' + PMCO + ')\n'
+            Txt = PreMCO(Txt, DateDT, PMCO)  # 得到组织好的PMCO文本
         else:  # 和预报MCO一致
             Txt = Txt + ')\n'
     else:  # 无MCO集装器
-        Txt = Txt + '(无MCO)\n'
+        Txt = Txt + '(无MCO'
+        if PMCO != ULD:  # 和预报MCO有差异
+            Txt = PreMCO(Txt, DateDT, PMCO)  # 得到组织好的PMCO文本
+        else:  # 和预报MCO一致
+            Txt = Txt + ')\n'
     Txt = Txt + '货运使用板箱：'
     ULDLst = []  # 货集装器列表为空
     if Flight.CPMC != '':  # 有货PMC
@@ -128,3 +129,10 @@ def WritFlight(Path, Date, Flight):  # 写Flights文本文件
         Txt = Txt + ' 平衡'
     from WritTXT.Function import WritTXT
     WritTXT(Path, 'w+', Txt)  # 写TXT文件
+
+def PreMCO(Txt, DateDT, PMCO):  # 返回组织好的PMCO文本
+    Txt = Txt + ', 但实际客运'
+    import datetime
+    DateDT = DateDT + datetime.timedelta(days=-1)  # 日期减1天
+    Date = DateDT.strftime('%d%b').upper()  # 日期格式转日期字符串并大写
+    return Txt + Date + '预报' + PMCO + ')\n'  # 返回组织好的PMCO文本
