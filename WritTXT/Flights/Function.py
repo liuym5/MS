@@ -127,6 +127,8 @@ def WritFlight(Path, Date, Flight):  # 写Flights文本文件
         Txt = Txt + ' 限载'
     elif Flight.ORsn == 'B':  # 限平衡
         Txt = Txt + ' 平衡'
+    elif Flight.ORsn == 'A':  # 限飞机
+        Txt = Txt + ' 飞机问题'
     from WritTXT.Function import WritTXT
     WritTXT(Path, 'w+', Txt)  # 写TXT文件
 
