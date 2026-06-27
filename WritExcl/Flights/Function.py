@@ -201,6 +201,8 @@ def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
         ST.Cells(r, 23).Value = 'Lack of space'  # 写舱位限制
     elif Flight.ORsn == 'B':  # 限平衡
         ST.Cells(r, 23).Value = 'Balance problem'  # 写平衡限制
+    elif Flight.ORsn == 'A':  # 限飞机
+        ST.Cells(r, 23).Value = 'Aircraft problem'  # 写飞机限制
     else:  # 无拉货
         ST.Cells(r, 23).Value = ''  # 写空
     MCOLst = []  # MCO集装器列表
