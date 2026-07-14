@@ -72,12 +72,7 @@ def WritMCO(Path, SN, r, Flight):  # 写MCO表格文件
     XL.Visible = False  # 表格不可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
-    No = ST.Cells(r-1, 2).Text  # 上1行序号
-    if No.isdigit():  # 是数字
-        No = int(No) + 1  # 序号加1
-    else:  # 不是数字
-        No = 1  # 序号为1
-    ST.Cells(r, 2).Value = No  # 写序号
+    ST.Cells(r, 2).Value = GetMCONo(ST, r)  # 写返回MCO文件序号数字
     ST.Cells(r, 4).Value = Flight.ACType  # 写机型
     ST.Cells(r, 5).Value = Flight.GW  # 写重量
     ST.Cells(r, 6).Value = Flight.CPMC  # 写货PMC
@@ -110,18 +105,9 @@ def WritMonitor(Path, SN, r, Flight):  # 写Monitor表格文件
     XL.Visible = False  # 表格不可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
-    No = ST.Cells(r-1, 1).Text  # 上1行序号
-    if No.isdigit():  # 是数字
-        No = int(No) + 1  # 序号加1
-    else:  # 不是数字
-        No = ST.Cells(r-2, 1).Text  # 上2行序号
-        No = int(No) + 1  # 序号加1
-    ST.Cells(r, 1).Value = No  # 写序号
+    ST.Cells(r, 1).Value = GetMonitorNo(ST, r)  # 写返回序号数字
     ST.Cells(r, 6).Value = Flight.ACType  # 写机型
-    if Flight.CW != '0':  # 有货
-        ST.Cells(r, 7).Value = Flight.CW  # 写计费重量
-    else:  # 无货
-        ST.Cells(r, 7).Value = 'NIL'  # 写计费重量为NIL
+    ST.Cells(r, 7).Value = GetCW(Flight.CW)  # 写返回计费重量字符串
     ST.Cells(r, 10).Value = Flight.CPMC  # 写货PMC
     ST.Cells(r, 11).Value = Flight.CPAG  # 写货PAG
     ST.Cells(r, 12).Value = Flight.CPLA  # 写货PLA
@@ -135,37 +121,17 @@ def WritMonitor(Path, SN, r, Flight):  # 写Monitor表格文件
     ST.Cells(r, 20).Value = Flight.OPAG  # 写拉货PAG
     ST.Cells(r, 21).Value = Flight.OPLA  # 写拉货PLA
     ST.Cells(r, 22).Value = Flight.OAKE  # 写拉货AKE
-    if Flight.ORsn == 'P':  # 限载
-        ST.Cells(r, 23).Value = 'Payload restriction'  # 写载量限制
-    elif Flight.ORsn == 'S':  # 限舱位
-        ST.Cells(r, 23).Value = 'Lack of space'  # 写舱位限制
-    elif Flight.ORsn == 'B':  # 限平衡
-        ST.Cells(r, 23).Value = 'Balance problem'  # 写平衡限制
-    elif Flight.ORsn == 'A':  # 限飞机
-        ST.Cells(r, 23).Value = 'Aircraft problem'  # 写飞机限制
-    else:  # 无拉货
-        ST.Cells(r, 23).Value = ''  # 写空
-    MCOLst = []  # MCO集装器列表
-    if Flight.MPMC != '':  # 有MCOPMC
-        MCOLst.append(Flight.MPMC + 'PMC')  # 添加MCOPMC到MCO集装器列表
-    if Flight.MPAG != '':  # 有MCOPAG
-        MCOLst.append(Flight.MPAG + 'PAG')  # 添加MCOPAG到MCO集装器列表
-    if Flight.MPLA != '':  # 有MCOPLA
-        MCOLst.append(Flight.MPLA + 'PLA')  # 添加MCOPLA到MCO集装器列表
-    if Flight.MAKE != '':  # 有MCOAKE
-        MCOLst.append(Flight.MAKE + 'AKE')  # 添加MCOAKE到MCO集装器列表
-    Len = len(MCOLst)  # MCO集装器列表长度
-    MCO = ''  # MCO集装器为空
-    for i in range(Len):  # 遍历列表
-        MCO = MCO + MCOLst[i]  # 添加MCO集装器字符串
-        if i + 1 < Len:  # 不是列表最后
-            MCO = MCO + '+'  # 末尾添加加号
-    ST.Cells(r, 24).Value = MCO  # 写MCO集装器
+    ORsn = GetORsn(Flight.ORsn)  # 返回拉货原因字符串
+    ST.Cells(r, 23).Value = ORsn  # 写拉货原因
+    ST.Cells(r, 24).Value = GetMCOULD(Flight)  # 写返回MCO集装器字符串
     ST.Cells(r, 25).Value = Flight.PAX  # 写人数
-    ST.Cells(r, 26).Value = Flight.ULoad  # 写剩余载量
-    ST.Cells(r, 27).Value = Flight.ACNo  # 写机号
-    ST.Cells(r, 28).Value = Flight.Load  # 写载重
-    ST.Cells(r, 29).Value = Flight.TOW  # 写起飞重量
+    RULD = GetRULD(Flight)  # 返回空集装器字符串
+    ST.Cells(r, 26).Value = RULD  # 写空集装器字符串
+    ST.Cells(r, 27).Value = GetRRsn(RULD, Flight.OGW, ORsn)  # 写返回空舱位原因字符串
+    ST.Cells(r, 28).Value = Flight.ULoad  # 写剩余载量
+    ST.Cells(r, 29).Value = Flight.ACNo  # 写机号
+    ST.Cells(r, 30).Value = Flight.Load  # 写载重
+    ST.Cells(r, 31).Value = Flight.TOW  # 写起飞重量
     WB.Save()  # 保存Statistic表格
     WB.Close()  # 关闭Statistic表格对象
     XL.Quit()  # 关闭Excel
@@ -178,10 +144,7 @@ def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     ST.Cells(r, 2).Value = Flight.Date  # 写日期
     ST.Cells(r, 6).Value = Flight.ACType  # 写机型
-    if Flight.CW != '0':  # 有货
-        ST.Cells(r, 7).Value = Flight.CW  # 写计费重量
-    else:  # 无货
-        ST.Cells(r, 7).Value = 'NIL'  # 写计费重量为NIL
+    ST.Cells(r, 7).Value = GetCW(Flight.CW)  # 写返回计费重量字符串
     ST.Cells(r, 10).Value = Flight.CPMC  # 写货PMC
     ST.Cells(r, 11).Value = Flight.CPAG  # 写货PAG
     ST.Cells(r, 12).Value = Flight.CPLA  # 写货PLA
@@ -195,33 +158,13 @@ def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
     ST.Cells(r, 20).Value = Flight.OPAG  # 写拉货PAG
     ST.Cells(r, 21).Value = Flight.OPLA  # 写拉货PLA
     ST.Cells(r, 22).Value = Flight.OAKE  # 写拉货AKE
-    if Flight.ORsn == 'P':  # 限载
-        ST.Cells(r, 23).Value = 'Payload restriction'  # 写载量限制
-    elif Flight.ORsn == 'S':  # 限舱位
-        ST.Cells(r, 23).Value = 'Lack of space'  # 写舱位限制
-    elif Flight.ORsn == 'B':  # 限平衡
-        ST.Cells(r, 23).Value = 'Balance problem'  # 写平衡限制
-    elif Flight.ORsn == 'A':  # 限飞机
-        ST.Cells(r, 23).Value = 'Aircraft problem'  # 写飞机限制
-    else:  # 无拉货
-        ST.Cells(r, 23).Value = ''  # 写空
-    MCOLst = []  # MCO集装器列表
-    if Flight.MPMC != '':  # 有MCOPMC
-        MCOLst.append(Flight.MPMC + 'PMC')  # 添加MCOPMC到MCO集装器列表
-    if Flight.MPAG != '':  # 有MCOPAG
-        MCOLst.append(Flight.MPAG + 'PAG')  # 添加MCOPAG到MCO集装器列表
-    if Flight.MPLA != '':  # 有MCOPLA
-        MCOLst.append(Flight.MPLA + 'PLA')  # 添加MCOPLA到MCO集装器列表
-    if Flight.MAKE != '':  # 有MCOAKE
-        MCOLst.append(Flight.MAKE + 'AKE')  # 添加MCOAKE到MCO集装器列表
-    Len = len(MCOLst)  # MCO集装器列表长度
-    MCO = ''  # MCO集装器为空
-    for i in range(Len):  # 遍历列表
-        MCO = MCO + MCOLst[i]  # 添加MCO集装器字符串
-        if i + 1 < Len:  # 不是列表最后
-            MCO = MCO + '+'  # 末尾添加加号
-    ST.Cells(r, 24).Value = MCO  # 写MCO集装器
+    ORsn = GetORsn(Flight.ORsn)  # 返回拉货原因字符串
+    ST.Cells(r, 23).Value = ORsn  # 写拉货原因
+    ST.Cells(r, 24).Value = GetMCOULD(Flight)  # 写返回MCO集装器字符串
     ST.Cells(r, 25).Value = Flight.PAX  # 写人数
+    RULD = GetRULD(Flight)  # 返回空集装器字符串
+    ST.Cells(r, 26).Value = RULD  # 写空集装器字符串
+    ST.Cells(r, 27).Value = GetRRsn(RULD, Flight.OGW, ORsn)  # 写返回空舱位原因字符串
     WB.Save()  # 保存Statistic表格
     WB.Close()  # 关闭Statistic表格对象
     XL.Quit()  # 关闭Excel
@@ -238,3 +181,75 @@ def WritVerify(Path, SN, r, Flight):  # 写对账表格文件
     WB.Save()  # 保存Statistic表格
     WB.Close()  # 关闭Statistic表格对象
     XL.Quit()  # 关闭Excel
+
+def GetMCONo(ST, r):  # 返回MCO文件序号数字
+    No = ST.Cells(r - 1, 2).Text  # 上1行序号
+    if No.isdigit():  # 是数字
+        return int(No) + 1  # 序号加1
+    return 1  # 序号加1
+
+def GetMonitorNo(ST, r):  # 返回Monitor文件序号数字
+    No = ST.Cells(r - 1, 1).Text  # 上1行序号
+    if No.isdigit():  # 是数字
+        return int(No) + 1  # 序号加1
+    No = ST.Cells(r-2, 1).Text  # 上2行序号
+    return int(No) + 1  # 序号加1
+
+def GetCW(CW):  # 返回计费重量字符串
+    if CW != '0':  # 有货
+        return CW  # 写计费重量字符串
+    return 'NIL'  # 返回计费重量为NIL字符串
+
+def GetORsn(ORsn):  # 返回拉货原因
+    if ORsn == 'P':  # 限载
+        return 'Payload restriction'
+    if ORsn == 'S':  # 限舱位
+        return 'Lack of space'
+    if ORsn == 'B':  # 限平衡
+        return 'Balance problem'
+    if ORsn == 'A':  # 限飞机
+        return 'Aircraft problem'
+    return ''
+
+def GetMCOULD(Flight):  # 返回MCO集装器字符串
+    ULDLst = []  # 集装器列表
+    if Flight.MPMC != '':  # 有MCOPMC
+        ULDLst.append(Flight.MPMC + 'PMC')  # 添加MCOPMC到集装器列表
+    if Flight.MPAG != '':  # 有MCOPAG
+        ULDLst.append(Flight.MPAG + 'PAG')  # 添加MCOPAG到集装器列表
+    if Flight.MPLA != '':  # 有MCOPLA
+        ULDLst.append(Flight.MPLA + 'PLA')  # 添加MCOPLA到集装器列表
+    if Flight.MAKE != '':  # 有MCOAKE
+        ULDLst.append(Flight.MAKE + 'AKE')  # 添加MCOAKE到集装器列表
+    Len = len(ULDLst)  # 集装器列表长度
+    ULD = ''  # 集装器为空
+    for i in range(Len):  # 遍历列表
+        ULD = ULD + ULDLst[i]  # 添加集装器字符串
+        if i + 1 < Len:  # 不是列表最后
+            ULD = ULD + '+'  # 末尾添加加号
+    return ULD  # 返回集装器字符串
+
+def GetRULD(Flight):  # 返回空集装器字符串
+    ULDLst = []  # 集装器列表
+    if Flight.RPMC != '':  # 有空PMC
+        ULDLst.append(Flight.RPMC + 'PMC')  # 添加空PMC到集装器列表
+    if Flight.RPAG != '':  # 有空PAG
+        ULDLst.append(Flight.RPAG + 'PAG')  # 添加空PAG到集装器列表
+    if Flight.RPLA != '':  # 有空PLA
+        ULDLst.append(Flight.RPLA + 'PLA')  # 添加空PLA到集装器列表
+    if Flight.RAKE != '':  # 有空AKE
+        ULDLst.append(Flight.RAKE + 'AKE')  # 添加空AKE到集装器列表
+    Len = len(ULDLst)  # 集装器列表长度
+    ULD = ''  # 集装器为空
+    for i in range(Len):  # 遍历列表
+        ULD = ULD + ULDLst[i]  # 添加集装器字符串
+        if i + 1 < Len:  # 不是列表最后
+            ULD = ULD + '+'  # 末尾添加加号
+    return ULD  # 返回集装器字符串
+
+def GetRRsn(RULD, OGW, ORsn):  # 返回空舱位原因字符串
+    if RULD in ['', '1AKE', '2AKE']:  # 集装器为空或1AKE或2AKE
+        return ''  # 返回空字符串
+    if OGW == '':  # 无拉货
+        return 'No cargo'  # 返回无货字符串
+    return ORsn  # 返回拉货原因字符串
