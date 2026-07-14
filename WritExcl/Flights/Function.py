@@ -1,7 +1,7 @@
 def WritACType(Path, Flight):  # 写PRELOAD表格文件机号
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets('PRE-LOAD')  # 返回当月当年页对象
     ST.Cells(3, 3).Value = Flight.ACType  # 写机号
@@ -12,7 +12,7 @@ def WritACType(Path, Flight):  # 写PRELOAD表格文件机号
 def WritStatistic(Path, SN, r, Flight):  # 写Statistic表格文件
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     if Flight.GW != '0':  # 有货
@@ -36,7 +36,7 @@ def WritStatistic(Path, SN, r, Flight):  # 写Statistic表格文件
 def WritWaterproof(Path, SN, r, Flight):  # 写雨布表格文件
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     ULDLst = []  # 货集装器列表
@@ -69,7 +69,7 @@ def WritWaterproof(Path, SN, r, Flight):  # 写雨布表格文件
 def WritMCO(Path, SN, r, Flight):  # 写MCO表格文件
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     ST.Cells(r, 2).Value = GetMCONo(ST, r)  # 写返回MCO文件序号数字
@@ -102,7 +102,7 @@ def WritMCO(Path, SN, r, Flight):  # 写MCO表格文件
 def WritMonitor(Path, SN, r, Flight):  # 写Monitor表格文件
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     ST.Cells(r, 1).Value = GetMonitorNo(ST, r)  # 写返回序号数字
@@ -139,7 +139,7 @@ def WritMonitor(Path, SN, r, Flight):  # 写Monitor表格文件
 def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     ST.Cells(r, 2).Value = Flight.Date  # 写日期
@@ -172,7 +172,7 @@ def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
 def WritVerify(Path, SN, r, Flight):  # 写对账表格文件
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     if ST.Cells(r, 2).Text == 'MS0951':  # 进港航班

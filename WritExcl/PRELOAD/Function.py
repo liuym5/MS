@@ -2,7 +2,7 @@ def WritPRELOADST(Path, Date):  # 写PRELOAD页
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     PRELOADWB = XL.Workbooks.Open(Path)  # 返回PRELOAD表格对象
     PRELOADST = PRELOADWB.Worksheets('PRE-LOAD')  # 返回PRELOAD页对象
     Date = Date + ' 23:55'  # 日期

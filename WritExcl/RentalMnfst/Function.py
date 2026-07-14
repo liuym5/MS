@@ -2,7 +2,7 @@ def WritRentalMnfstST(Path):  # 写DS舱单页
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     MnfstWB = XL.Workbooks.Open(Path)  # 返回舱单副本表格对象
     DSMnfstST = MnfstWB.Worksheets('租板舱单')  # 返回DS舱单页对象
     Ser = 0  # 得到初始当前序号

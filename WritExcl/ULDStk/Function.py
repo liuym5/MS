@@ -2,7 +2,7 @@ def WritCPMULDStkST(Path):  # 写CPM到ULDStock页
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
     from Interface.Variable import CfgMS
@@ -58,7 +58,7 @@ def WritUCMULDStkST(Path):  # 写UCM到ULDStock页
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
     from Interface.Variable import CfgMS
@@ -105,7 +105,7 @@ def DelULDStkST(Path, Date):  # 删除集装器在ULD Stock页
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
     ULDStkST.Cells(1, 1).Value = 'PVG ULD STOCK ' + Date  # 写ULD Stock页单元格日期
@@ -258,7 +258,7 @@ def ChkUCMULDStkST(Path):  # 检查UCMULD在ULD Stock页
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
     from Interface.Variable import CfgMS
@@ -331,7 +331,7 @@ def ChkSCMULDStkST(Path):  # 检查SCM在ULD Stock页
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     # XL = win32com.client.gencache.EnsureDispatch('Excel.Application')  # 调用Excel
-    XL.Visible = False  # 表格不可见
+    XL.Visible = True  # 表格可见
     ULDStkWB = XL.Workbooks.Open(Path)  # 返回ULDStock表格对象
     ULDStkST = ULDStkWB.Worksheets('ULD Stock')  # 返回ULD Stock页对象
     from Interface.Variable import CfgMS
