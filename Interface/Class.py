@@ -76,7 +76,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         Day2 = self.DateDE.date().toString('dd')  # 2位数字日
         from PyQt5.QtCore import QLocale
         Day2_MonthEA = QLocale(QLocale.English).toString(self.DateDE.date(), 'dd MMM').upper()  # 2位数字日 + 空格 + 大写英语缩写月
-        Day2_MonthEA_Year2 = QLocale(QLocale.English).toString(self.DateDE.date(), 'dd MMM yy').upper()  # 2位数字日 + 空格 + 大写英语缩写月 + 空格 + 2位数字年
+        Day2MonthEA_Year2 = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM yy').upper()  # 2位数字日 + 大写英语缩写月 + 空格 + 2位数字年
         OutDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/OUT/'  # OUT目录路径
         MnfstFilePath = OutDirPath + '舱单 - 副本.xlsx'  # 舱单副本表格文件路径
         import os
@@ -84,7 +84,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
             self.MsgLabel.setText("舱单副本表格文件不存在！！")
             return
         Day2DirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/'  # Day2目录路径
-        CBAFilePath = Day2DirPath + Day2_MonthEA_Year2 + ' CBA - 副本.xlsx'  # CBA表格文件路径
+        CBAFilePath = Day2DirPath + Day2MonthEA_Year2 + ' CBA - 副本.xlsx'  # CBA表格文件路径
         if os.path.exists(CBAFilePath) == False:  # CBA表格文件不存在
             self.MsgLabel.setText("CBA表格文件不存在！！")
             return
@@ -298,7 +298,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         if os.path.exists(Monitor2FilePath) == False:  # MCO表格文件不存在
             self.MsgLabel.setText("Monitor副本表格文件不存在！！")
             return
-        VerifyFilePath = DailyDirPath + Year2 + Month2 + '/财务/对账.xlsx'  # 对账表格文件路径
+        VerifyFilePath = DailyDirPath + Year2 + Month2 + '/财务/对账' + Month2 + '.xlsx'  # 对账表格文件路径
         if os.path.exists(VerifyFilePath) == False:  # 对账表格文件不存在
             self.MsgLabel.setText("对账表格文件不存在！！")
             return
