@@ -85,6 +85,8 @@ def GetPULD(Flight):  # 返回预报MCO集装器字符串
         ULD = ULD + ULDLst[i]  # 添加集装器字符串
         if i + 1 < Len:  # 不是列表最后
             ULD = ULD + '+'  # 末尾添加加号
+    if ULD == '':  # 预报无MCO
+        return '无MCO'
     return ULD  # 返回集装器字符串
 
 def PreMCO(Txt, DateDT, PULD):  # 返回组织好的预报MCO集装器文本
