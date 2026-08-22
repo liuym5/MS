@@ -2,6 +2,7 @@ def ReadCPM(Path):  # 读取CPM,返回是否有叠板
     from ReadTXT.Function import ReadTXT
     CPM = ReadTXT(Path)  # 返回CPM文件文本
     CPM = CPM.split('-')  # 以-分割字符串
+    CPM.pop()  # 删除最后1个列表项
     TypeTup = ('AKE', 'PMC', 'PAG', 'PLA', 'PAJ', 'P1P')  # 类型元组
     StackTF = False  # 无叠板
     for item in CPM:  # 遍历CPM字符串列表
