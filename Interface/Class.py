@@ -162,34 +162,6 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         ChkUCMULDStkST(ULDStkFilePath)  # 检查UCMULD在ULD Stock页
         self.MsgLabel.setText("UCM951比对完成")
 
-    def ULD952Fctn(self):  # ULD952功能
-        self.MsgLabel.setText("ULD952运行中")
-        self.MsgLabel.repaint()  # MsgLabel重绘
-        Year2Month2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
-        Day2 = self.DateDE.date().toString('dd')  # 2位数字日
-        OutDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/OUT/'  # OUT目录路径
-        CPM952FilePath = OutDirPath + 'CPM.txt'  # CPM952文件路径
-        import os
-        if os.path.exists(CPM952FilePath) == False:  # CPM952文件不存在
-            self.MsgLabel.setText("CPM952文件不存在！！")
-            return
-        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
-        from PyQt5.QtCore import QLocale
-        Day2MonthEA = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM').upper()  # 2位数字日 + 大写英语缩写月
-        ULDStkFileName = Day2MonthEA + ' PVG ULD STOCK.xlsx'  # ULDStock文件名
-        ULDStkFilePath = ULDStkDirPath + ULDStkFileName  # ULDStock文件路径
-        if os.path.exists(ULDStkFilePath) == False:  # ULDStock文件不存在
-            self.MsgLabel.setText("ULDStock文件不存在！！")
-            return
-        from ReadTXT.CPM.Function import ReadCPM
-        ReadCPM(CPM952FilePath)  # 读取CPM951,返回是否有叠板
-        from ReadTXT.CPM.Function import ReadCPMULD
-        ReadCPMULD()  # 读取CPMULDLst
-        Year4Month1Day1 = self.DateDE.date().toString('yyyy-M-d')  # 4位数字年1位数字月1位数字日
-        from WritExcl.ULDStk.Function import DelULDStkST
-        DelULDStkST(ULDStkFilePath, Year4Month1Day1)  # 删除集装器在ULD Stock页
-        self.MsgLabel.setText("ULD952删除完成")
-
     def LWS952Fctn(self):  # LWS952功能
         self.MsgLabel.setText("LWS952运行中")
         self.MsgLabel.repaint()  # MsgLabel重绘
@@ -350,6 +322,34 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         from WritExcl.RentalMnfst.Function import WritRentalMnfstST
         WritRentalMnfstST(MnfstFilePath)  # 写租板舱单页
         self.MsgLabel.setText("租板舱单录入完成")
+
+    def ULD952Fctn(self):  # ULD952功能
+        self.MsgLabel.setText("ULD952运行中")
+        self.MsgLabel.repaint()  # MsgLabel重绘
+        Year2Month2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
+        Day2 = self.DateDE.date().toString('dd')  # 2位数字日
+        OutDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/航班/' + Day2 + '/OUT/'  # OUT目录路径
+        CPM952FilePath = OutDirPath + 'CPM.txt'  # CPM952文件路径
+        import os
+        if os.path.exists(CPM952FilePath) == False:  # CPM952文件不存在
+            self.MsgLabel.setText("CPM952文件不存在！！")
+            return
+        ULDStkDirPath = 'C:/Files/MS/日常/' + Year2Month2 + '/5/'  # ULDStock目录路径
+        from PyQt5.QtCore import QLocale
+        Day2MonthEA = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM').upper()  # 2位数字日 + 大写英语缩写月
+        ULDStkFileName = Day2MonthEA + ' PVG ULD STOCK.xlsx'  # ULDStock文件名
+        ULDStkFilePath = ULDStkDirPath + ULDStkFileName  # ULDStock文件路径
+        if os.path.exists(ULDStkFilePath) == False:  # ULDStock文件不存在
+            self.MsgLabel.setText("ULDStock文件不存在！！")
+            return
+        from ReadTXT.CPM.Function import ReadCPM
+        ReadCPM(CPM952FilePath)  # 读取CPM951,返回是否有叠板
+        from ReadTXT.CPM.Function import ReadCPMULD
+        ReadCPMULD()  # 读取CPMULDLst
+        Year4Month1Day1 = self.DateDE.date().toString('yyyy-M-d')  # 4位数字年1位数字月1位数字日
+        from WritExcl.ULDStk.Function import DelULDStkST
+        DelULDStkST(ULDStkFilePath, Year4Month1Day1)  # 删除集装器在ULD Stock页
+        self.MsgLabel.setText("ULD952删除完成")
 
     def SCM1Fctn(self):  # SCM1功能
         self.MsgLabel.setText("SCM1运行中")
