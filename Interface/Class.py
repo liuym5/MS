@@ -287,9 +287,10 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         r = Getr(WaterproofFilePath, Year4, 0, Date)  # 得到雨布表格文件当年页第0列日期行号
         from WritExcl.Flights.Function import WritWaterproof
         WritWaterproof(WaterproofFilePath, Year4, r, CurFlight)  # 写雨布表格文件
-        r = Getr(MCOFilePath, 'FLIGHT', 2, Date)  # 得到MCO表格文件FLIGHT页第2列日期行号
+        SN = 'FLIGHT' + Year2  # MCO表格页名
+        r = Getr(MCOFilePath, SN, 2, Date)  # 得到MCO表格文件FLIGHT页第2列日期行号
         from WritExcl.Flights.Function import WritMCO
-        WritMCO(MCOFilePath, 'FLIGHT', r, CurFlight)  # 写MCO表格文件
+        WritMCO(MCOFilePath, SN, r, CurFlight)  # 写MCO表格文件
         r = Getr(MonitorFilePath, Year4, 1, Date)  # 得到Monitor表格文件当年页第1列日期行号
         from WritExcl.Flights.Function import WritMonitor
         WritMonitor(MonitorFilePath, Year4, r, CurFlight)  # 写Monitor表格文件
