@@ -130,7 +130,7 @@ def WritMonitor(Path, SN, r, Flight):  # 写Monitor表格文件
     ST.Cells(r, 25).Value = Flight.PAX  # 写人数
     RULD = GetRULD(Flight)  # 返回空集装器字符串
     ST.Cells(r, 26).Value = RULD  # 写空集装器字符串
-    ST.Cells(r, 27).Value = GetRRsn(ORsn, RULD, Flight)  # 写返回空舱位原因字符串
+    ST.Cells(r, 27).Value = GetRRsn(RULD, Flight)  # 写返回空舱位原因字符串
     ST.Cells(r, 28).Value = Flight.ULoad  # 写剩余载量
     ST.Cells(r, 29).Value = Flight.ACNo  # 写机号
     ST.Cells(r, 30).Value = Flight.Load  # 写载重
@@ -167,7 +167,7 @@ def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
     ST.Cells(r, 25).Value = Flight.PAX  # 写人数
     RULD = GetRULD(Flight)  # 返回空集装器字符串
     ST.Cells(r, 26).Value = RULD  # 写空集装器字符串
-    ST.Cells(r, 27).Value = GetRRsn(ORsn, RULD, Flight)  # 写返回空舱位原因字符串
+    ST.Cells(r, 27).Value = GetRRsn(RULD, Flight)  # 写返回空舱位原因字符串
     WB.Save()  # 保存Statistic表格
     WB.Close()  # 关闭Statistic表格对象
     XL.Quit()  # 关闭Excel
@@ -250,14 +250,16 @@ def GetRULD(Flight):  # 返回空集装器字符串
             ULD = ULD + '+'  # 末尾添加加号
     return ULD  # 返回集装器字符串
 
-def GetRRsn(ORsn, RULD, Flight):  # 返回空舱位原因字符串
-    if RULD in ['', '1AKE', '2AKE']:  # 集装器为空或1AKE或2AKE
-        return ''  # 返回空字符串
+def GetRRsn(RULD, Flight):  # 返回空舱位原因字符串
+    if RULD in ['', '1AKE']:  # 集装器为空或1AKE
+        return ''
+    if RULD == '2AKE':  # 集装器为2AKE
+        return '无法放板'
+    if Flight.ORsn in ['P', 'B', 'A']:  # 拉货原因为限载或平衡或飞机
+        return GetORsn(Flight.ORsn)  # 返回拉货原因字符串
     if ifNoshowMCO(Flight):  # 是否MCO no show
         return 'MCO no show'
-    if Flight.OGW == '':  # 无拉货
-        return 'No cargo'  # 返回无货字符串
-    return ORsn  # 返回拉货原因字符串
+    return 'No cargo'
 
 def ifNoshowMCO(Flight):  # 是否MCO no show
     PPMC = 0  # 预计MCOPMC为0
