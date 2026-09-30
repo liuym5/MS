@@ -257,6 +257,8 @@ def GetRRsn(RULD, Flight):  # 返回空舱位原因字符串
         return '无法放板'
     if Flight.ORsn in ['P', 'B', 'A']:  # 拉货原因为限载或平衡或飞机
         return GetORsn(Flight.ORsn)  # 返回拉货原因字符串
+    if int(Flight.ULoad) < 2500:  # 剩余载量小于2500
+        return 'Payload restriction'
     if ifNoshowMCO(Flight):  # 是否MCO no show
         return 'MCO no show'
     return 'No cargo'
