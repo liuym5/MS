@@ -16,4 +16,4 @@ def GetAKE(Path):  # 返回AKE字符串列表
     from ReadTXT.Function import ReadTXT
     AKE = ReadTXT(Path)  # 返回AKE952文件文本
     AKE = AKE.split()  # 分割字符串
-    return [item for item in AKE if item.isdigit()]  # 返回数字项列表
+    return [item for item in AKE if item.isdigit() and len(item) == 5]  # 返回数字项列表

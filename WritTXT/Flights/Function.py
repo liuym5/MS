@@ -30,8 +30,10 @@ def WritFlight(Path, Date, Flight):  # 写Flights文本文件
            '拉货：')
     Txt = Txt + GetOULD(Flight) + '\n'  # 拼接返回拉货集装器字符串
     Txt = (Txt + '未使用板箱情况：')
-    Txt = Txt + GetRULD(Flight)  # 拼接返回空集装器字符串
-    Txt = Txt + GetORsn(Flight.ORsn)  # 拼接返回拉货原因符串
+    RULD = GetRULD(Flight)  # 返回空集装器字符串
+    Txt = Txt + RULD  # 拼接返回空集装器字符串
+    from WritExcl.Flights.Function import GetRRsn
+    Txt = Txt + ' ' + GetRRsn(RULD, Flight)  # 拼接返回空舱原因符串
     from WritTXT.Function import WritTXT
     WritTXT(Path, 'w+', Txt)  # 写TXT文件
 
@@ -155,12 +157,3 @@ def GetRULD(Flight):  # 返回空集装器字符串
     if ULD == '':  # 无集装器
         ULD = '无'
     return ULD  # 返回集装器字符串
-
-def GetORsn(ORsn):  # 返回拉货原因字符串
-    if ORsn == 'P':  # 限载
-        return ' 限载'
-    if ORsn == 'B':  # 限平衡
-        return ' 平衡'
-    if ORsn == 'A':  # 限飞机
-        return ' 飞机问题'
-    return ''

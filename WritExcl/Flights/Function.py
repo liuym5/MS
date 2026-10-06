@@ -7,10 +7,10 @@ def WritACType(Path, Flight):  # 写PRELOAD表格文件机号
     XL.Visible = False  # 表格不可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets('PRE-LOAD')  # 返回当月当年页对象
-    ST.Cells(3, 3).Value = Flight.ACType  # 写机号
-    WB.Save()  # 保存Statistic表格
-    WB.Close()  # 关闭Statistic表格对象
-    XL.Quit()  # 关闭Excel
+    ST.Cells(3, 3).Value = Flight.ACType  # 写机型
+    WB.Save()  # 保存表格
+    WB.Close()  # 关闭表格对象
+    XL.Quit()  # 关闭表格
 
 def WritStatistic(Path, SN, r, Flight):  # 写Statistic表格文件
     import win32com.client
@@ -18,10 +18,7 @@ def WritStatistic(Path, SN, r, Flight):  # 写Statistic表格文件
     XL.Visible = False  # 表格不可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
-    if Flight.GW != '0':  # 有货
-        ST.Cells(r, 2).Value = Flight.GW  # 写重量
-    else:  # 无货
-        ST.Cells(r, 2).Value = 'NIL'  # 写重量为NIL
+    ST.Cells(r, 2).Value = ChkNIL(Flight.GW)  # 写返回货物重量字符串
     CPMC = 0  # 货PMC为0
     CPAG = 0  # 货PAG为0
     CPLA = 0  # 货PLA为0
@@ -32,9 +29,9 @@ def WritStatistic(Path, SN, r, Flight):  # 写Statistic表格文件
     if Flight.CPLA != '':  # 有货PLA
         CPLA = int(Flight.CPLA)  # 得到货PMC
     ST.Cells(r, 12).Value = (CPMC + CPAG + CPLA) * 2  # 写雨布张数
-    WB.Save()  # 保存Statistic表格
-    WB.Close()  # 关闭Statistic表格对象
-    XL.Quit()  # 关闭Excel
+    WB.Save()  # 保存表格
+    WB.Close()  # 关闭表格对象
+    XL.Quit()  # 关闭表格
 
 def WritWaterproof(Path, SN, r, Flight):  # 写雨布表格文件
     import win32com.client
@@ -77,7 +74,7 @@ def WritMCO(Path, SN, r, Flight):  # 写MCO表格文件
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     ST.Cells(r, 2).Value = GetMCONo(ST, r)  # 写返回MCO文件序号数字
     ST.Cells(r, 4).Value = Flight.ACType  # 写机型
-    ST.Cells(r, 5).Value = Flight.GW  # 写重量
+    ST.Cells(r, 5).Value = ChkNIL(Flight.GW)  # 写返回货物重量字符串
     ST.Cells(r, 6).Value = Flight.CPMC  # 写货PMC
     ST.Cells(r, 7).Value = Flight.CPAG  # 写货PAG
     ST.Cells(r, 8).Value = Flight.CPLA  # 写货PLA
@@ -110,7 +107,7 @@ def WritMonitor(Path, SN, r, Flight):  # 写Monitor表格文件
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     ST.Cells(r, 1).Value = GetMonitorNo(ST, r)  # 写返回序号数字
     ST.Cells(r, 6).Value = Flight.ACType  # 写机型
-    ST.Cells(r, 7).Value = GetCW(Flight)  # 写返回计费重量字符串
+    ST.Cells(r, 7).Value = ChkNIL(Flight.CW)  # 写返回计费重量字符串
     ST.Cells(r, 10).Value = Flight.CPMC  # 写货PMC
     ST.Cells(r, 11).Value = Flight.CPAG  # 写货PAG
     ST.Cells(r, 12).Value = Flight.CPLA  # 写货PLA
@@ -147,7 +144,7 @@ def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     ST.Cells(r, 2).Value = Flight.Date  # 写日期
     ST.Cells(r, 6).Value = Flight.ACType  # 写机型
-    ST.Cells(r, 7).Value = GetCW(Flight)  # 写返回计费重量字符串
+    ST.Cells(r, 7).Value = ChkNIL(Flight.CW)  # 写返回计费重量字符串
     ST.Cells(r, 10).Value = Flight.CPMC  # 写货PMC
     ST.Cells(r, 11).Value = Flight.CPAG  # 写货PAG
     ST.Cells(r, 12).Value = Flight.CPLA  # 写货PLA
@@ -167,7 +164,7 @@ def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
     ST.Cells(r, 25).Value = Flight.PAX  # 写人数
     RULD = GetRULD(Flight)  # 返回空集装器字符串
     ST.Cells(r, 26).Value = RULD  # 写空集装器字符串
-    ST.Cells(r, 27).Value = GetRRsn(RULD, Flight)  # 写返回空舱位原因字符串
+    ST.Cells(r, 27).Value = GetRRsn(RULD, Flight)  # 写返回空舱原因字符串
     WB.Save()  # 保存Statistic表格
     WB.Close()  # 关闭Statistic表格对象
     XL.Quit()  # 关闭Excel
@@ -180,7 +177,7 @@ def WritVerify(Path, SN, r, Flight):  # 写对账表格文件
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     if ST.Cells(r, 2).Text == 'MS0951':  # 进港航班
         r += 1  # 行号加1
-    ST.Cells(r, 7).Value = Flight.GW  # 写重量
+    ST.Cells(r, 7).Value = Flight.GW  # 写货物重量
     WB.Save()  # 保存Statistic表格
     WB.Close()  # 关闭Statistic表格对象
     XL.Quit()  # 关闭Excel
@@ -198,10 +195,10 @@ def GetMonitorNo(ST, r):  # 返回Monitor文件序号数字
     No = ST.Cells(r-2, 1).Text  # 上2行序号
     return int(No) + 1  # 序号加1
 
-def GetCW(Flight):  # 返回计费重量字符串
-    if Flight.CW != '0':  # 有货
-        return Flight.CW  # 写计费重量字符串
-    return 'NIL'  # 返回计费重量为NIL字符串
+def ChkNIL(W):  # 返回重量字符串
+    if W != '0':  # 有货
+        return W  # 返回重量字符串
+    return 'NIL'
 
 def GetORsn(ORsn):  # 返回拉货原因
     if ORsn == 'P':  # 限载
@@ -251,7 +248,7 @@ def GetRULD(Flight):  # 返回空集装器字符串
     return ULD  # 返回集装器字符串
 
 def GetRRsn(RULD, Flight):  # 返回空舱位原因字符串
-    if RULD in ['', '1AKE']:  # 集装器为空或1AKE
+    if RULD in ['', '无', '1AKE']:  # 集装器为空或无或1AKE
         return ''
     if RULD == '2AKE':  # 集装器为2AKE
         return '无法放板'
