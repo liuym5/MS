@@ -1,12 +1,10 @@
-from ReadExcl.Flight.Class import Flight
-
-
-def WritACType(Path, Flight):  # 写PRELOAD表格文件机号
+def WritACType(Path, Date, Flight):  # 写PRELOAD表格文件机号
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets('PRE-LOAD')  # 返回当月当年页对象
+    ST.Cells(2, 3).Value = GetLoadFltNo(Date)  # 写航班号
     ST.Cells(3, 3).Value = Flight.ACType  # 写机型
     WB.Save()  # 保存表格
     WB.Close()  # 关闭表格对象
@@ -33,7 +31,7 @@ def WritStatistic(Path, SN, r, Flight):  # 写Statistic表格文件
     WB.Close()  # 关闭表格对象
     XL.Quit()  # 关闭表格
 
-def WritWaterproof(Path, SN, r, Flight):  # 写雨布表格文件
+def WritWaterproof(Path, SN, r, Flight, Date):  # 写雨布表格文件
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
@@ -60,6 +58,7 @@ def WritWaterproof(Path, SN, r, Flight):  # 写雨布表格文件
             ULD = ULD + '+'  # 末尾添加加号
     if ULD == '':  # 无货
         ULD = 'NIL'  # 无货集装器
+    ST.Cells(r, 2).Value = GetWpFltNo(Date)  # 写航班号
     ST.Cells(r, 4).Value = ULD  # 写货集装器
     ST.Cells(r, 5).Value = (CPMC + CPAG + CPLA) * 2  # 写雨布张数
     WB.Save()  # 保存Statistic表格
@@ -99,13 +98,14 @@ def WritMCO(Path, SN, r, Flight):  # 写MCO表格文件
     WB.Close()  # 关闭Statistic表格对象
     XL.Quit()  # 关闭Excel
 
-def WritMonitor(Path, SN, r, Flight):  # 写Monitor表格文件
+def WritMonitor(Path, SN, r, Date, Flight):  # 写Monitor表格文件
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     ST.Cells(r, 1).Value = GetMonitorNo(ST, r)  # 写返回序号数字
+    ST.Cells(r, 3).Value = GetWpFltNo(Date)  # 写航班号
     ST.Cells(r, 6).Value = Flight.ACType  # 写机型
     ST.Cells(r, 7).Value = ChkNIL(Flight.CW)  # 写返回计费重量字符串
     ST.Cells(r, 10).Value = Flight.CPMC  # 写货PMC
@@ -136,13 +136,14 @@ def WritMonitor(Path, SN, r, Flight):  # 写Monitor表格文件
     WB.Close()  # 关闭Statistic表格对象
     XL.Quit()  # 关闭Excel
 
-def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
+def WritMonitor2(Path, SN, r, Flight, Date):  # 写Monitor副本表格文件
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
     ST.Cells(r, 2).Value = Flight.Date  # 写日期
+    ST.Cells(r, 3).Value = GetWpFltNo(Date)  # 写航班号
     ST.Cells(r, 6).Value = Flight.ACType  # 写机型
     ST.Cells(r, 7).Value = ChkNIL(Flight.CW)  # 写返回计费重量字符串
     ST.Cells(r, 10).Value = Flight.CPMC  # 写货PMC
@@ -170,12 +171,14 @@ def WritMonitor2(Path, SN, r, Flight):  # 写Monitor副本表格文件
     XL.Quit()  # 关闭Excel
 
 def WritVerify(Path, SN, r, Flight):  # 写对账表格文件
+    if Flight.GW == '0':  # 无货
+        return
     import win32com.client
     XL = win32com.client.Dispatch('Excel.Application')  # 调用Excel
     XL.Visible = False  # 表格不可见
     WB = XL.Workbooks.Open(Path)  # 返回Statistic表格对象
     ST = WB.Worksheets(SN)  # 返回当月当年页对象
-    if ST.Cells(r, 2).Text == 'MS0951':  # 进港航班
+    if ST.Cells(r, 2).Text in ['MS0951', 'MS0949']:  # 进港航班
         r += 1  # 行号加1
     ST.Cells(r, 7).Value = Flight.GW  # 写货物重量
     WB.Save()  # 保存Statistic表格
@@ -276,3 +279,20 @@ def ifNoshowMCO(Flight):  # 是否MCO no show
     if PPMC + PPAG > MPMC + MPAG:  # MCO no show
         return True
     return False
+
+def ifSat(Date):  # 是否周六
+    import datetime
+    DateDT = datetime.datetime.strptime(Date, '%d%b%y')  # 日期字符串转日期格式
+    if DateDT.weekday() != 5:  # 不是周六
+        return False
+    return True
+
+def GetLoadFltNo(Date):  # 返回preLoad航班号字符串
+    if ifSat(Date):  # 是周六
+        return 'MS950  PVG-CAI'
+    return 'MS952  PVG-CAI'
+
+def GetWpFltNo(Date):  # 返回Waterproof航班号字符串
+    if ifSat(Date):  # 是周六
+        return 'MS950'
+    return 'MS952'

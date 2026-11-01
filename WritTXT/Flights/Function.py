@@ -1,8 +1,11 @@
 def WritFlight(Path, Date, Flight):  # 写Flights文本文件
     Txt = ('站点: PVG\n'
-           '航班号/航班日期：MS952/')
+           '航班号/航班日期：')
+    from WritExcl.Flights.Function import GetWpFltNo
+    FltNo = GetWpFltNo(Date)  # 航班号
+    Txt = Txt + FltNo + '/'
     import datetime
-    DateDT = datetime.datetime.strptime(Date, '%y%m%d')  # 日期字符串转日期格式
+    DateDT = datetime.datetime.strptime(Date, '%d%b%y')  # 日期字符串转日期格式
     Date = DateDT.strftime('%d%b').upper()  # 日期格式转日期字符串并大写
     Txt = (Txt + Date + '\n'
            '实际起飞时间： 23:55（延误0min， 原因：不详）\n'
