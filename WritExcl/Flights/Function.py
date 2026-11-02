@@ -128,9 +128,9 @@ def WritMonitor(Path, SN, r, Date, Flight):  # 写Monitor表格文件
     RULD = GetRULD(Flight)  # 返回空集装器字符串
     ST.Cells(r, 26).Value = RULD  # 写空集装器字符串
     ST.Cells(r, 27).Value = GetRRsn(RULD, Flight)  # 写返回空舱位原因字符串
-    ST.Cells(r, 28).Value = Flight.ULoad  # 写剩余载量
-    ST.Cells(r, 29).Value = Flight.ACNo  # 写机号
-    ST.Cells(r, 30).Value = Flight.Load  # 写载重
+    ST.Cells(r, 28).Value = Flight.Load  # 写载重
+    ST.Cells(r, 29).Value = Flight.ULoad  # 写剩余载量
+    ST.Cells(r, 30).Value = Flight.ACNo  # 写机号
     ST.Cells(r, 31).Value = Flight.TOW  # 写起飞重量
     WB.Save()  # 保存Statistic表格
     WB.Close()  # 关闭Statistic表格对象
@@ -166,6 +166,7 @@ def WritMonitor2(Path, SN, r, Flight, Date):  # 写Monitor副本表格文件
     RULD = GetRULD(Flight)  # 返回空集装器字符串
     ST.Cells(r, 26).Value = RULD  # 写空集装器字符串
     ST.Cells(r, 27).Value = GetRRsn(RULD, Flight)  # 写返回空舱原因字符串
+    ST.Cells(r, 28).Value = Flight.Load  # 写载重
     WB.Save()  # 保存Statistic表格
     WB.Close()  # 关闭Statistic表格对象
     XL.Quit()  # 关闭Excel
