@@ -61,8 +61,6 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         from WritExcl.ULDStk.Function import WritCPMULDStkST
         WritCPMULDStkST(ULDStkFilePath)  # 写ULDStock页
         if StackTF:  # 有叠板
-            DateDT = DateDT + datetime.timedelta(days=-1)  # 日期减1天
-            D2MEAU = DateDT.strftime('%d%b').upper()  # 日期格式转日期字符串并大写
             UCM951FileName = 'UCM ' + FltNo + '-' + D2MEAU + '.txt'  # UCM951文件名
             UCM951FilePath = ULD951DirPath + UCM951FileName  # UCM951文件路径
             if os.path.exists(UCM951FilePath) == False:  # UCM951文件不存在
