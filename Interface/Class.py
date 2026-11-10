@@ -61,7 +61,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         from WritExcl.ULDStk.Function import WritCPMULDStkST
         WritCPMULDStkST(ULDStkFilePath)  # 写ULDStock页
         if StackTF:  # 有叠板
-            UCM951FileName = 'UCM ' + FltNo + '-' + D2MEAU + '.txt'  # UCM951文件名
+            UCM951FileName = 'UCM ' + FltNo + '-' + D2MEAUIn + '.txt'  # UCM951文件名
             UCM951FilePath = ULD951DirPath + UCM951FileName  # UCM951文件路径
             if os.path.exists(UCM951FilePath) == False:  # UCM951文件不存在
                 self.MsgLabel.setText("UCM951文件不存在！！")
