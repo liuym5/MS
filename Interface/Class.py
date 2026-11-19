@@ -172,7 +172,7 @@ class MSMainForm(QMainWindow, Ui_MSForm):
         self.MsgLabel.repaint()  # MsgLabel重绘
         Y2M2 = self.DateDE.date().toString('yyMM')  # 2位数字年 + 2位数字月
         D2 = self.DateDE.date().toString('dd')  # 2位数字日
-        OutDirPath = 'C:/Files/MS/日常/' + Y2M2 + '/航班/' + D2 + '/OUT/'  # OUT目录路径
+        OutDirPath = 'C:/Files/MS/日常/' + Y2M2 + '/航班/' + D2 + '/'  # OUT目录路径
         from PyQt5.QtCore import QLocale
         D2MEAUY2 = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMMyy')  # 2位数字日 + 英语缩写月 + 2位数字年
         D2MEAU = QLocale(QLocale.English).toString(self.DateDE.date(), 'ddMMM').upper()  # 2位数字日 + 大写英语缩写月
